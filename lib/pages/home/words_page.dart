@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:remission/pages/home.dart';
-import 'package:remission/pages/recommendations.dart';
+import 'package:remission/pages/home/home.dart';
+import 'package:remission/pages/home/recommendations.dart';
 
 class WordButton extends StatefulWidget {
   final String word;

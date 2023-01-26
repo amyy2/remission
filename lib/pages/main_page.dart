@@ -1,10 +1,13 @@
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/material.dart';
-import 'package:remission/pages/home.dart';
+import 'package:remission/colors.dart';
+import 'package:remission/pages/home/home.dart';
 import 'package:remission/pages/goals.dart';
-import 'package:remission/pages/profile.dart';
+import 'package:remission/pages/profile/profile.dart';
 import 'package:remission/pages/explore.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class MainPage extends StatefulWidget {
   static String routeName = '/main-page';
@@ -25,25 +28,25 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
     PersistentBottomNavBarItem(
       icon: Icon(Icons.home),
       title: ("Home"),
-      activeColorPrimary: Colors.blueAccent,
+      activeColorPrimary: MyColors.darkBlue,
       inactiveColorPrimary: Colors.grey,
     ),
     PersistentBottomNavBarItem(
       icon: Icon(Icons.check_circle_outline),
       title: ("Goals"),
-      activeColorPrimary: Colors.blueAccent,
+      activeColorPrimary: MyColors.darkBlue,
       inactiveColorPrimary: Colors.grey,
     ),
     PersistentBottomNavBarItem(
       icon: Icon(Icons.search),
       title: ("Explore"),
-      activeColorPrimary: Colors.blueAccent,
+      activeColorPrimary: MyColors.darkBlue,
       inactiveColorPrimary: Colors.grey,
     ),
     PersistentBottomNavBarItem(
       icon: Icon(Icons.account_circle_outlined),
       title: ("Profile"),
-      activeColorPrimary: Colors.blueAccent,
+      activeColorPrimary: MyColors.darkBlue,
       inactiveColorPrimary: Colors.grey,
     ),
   ];

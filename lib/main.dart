@@ -34,7 +34,9 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             colorScheme:
                 ColorScheme.fromSwatch().copyWith(primary: MyColors.darkBlue),
-            textTheme: Theme.of(context).textTheme.apply(fontSizeFactor: 1.3),
+            textTheme: Theme.of(context)
+                .textTheme
+                .apply(fontSizeFactor: 1.3, fontFamily: 'Poppins'),
           ),
           routes: {
             '/main-page': (context) => const MainPage(),

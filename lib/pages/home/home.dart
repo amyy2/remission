@@ -1,12 +1,17 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:remission/pages/words_page.dart';
+import 'package:remission/pages/home/words_page.dart';
 import 'package:remission/services/firebase_auth_methods.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import '../../colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,14 +30,40 @@ var _good_color = Colors.black;
 var _great_color = Colors.black;
 
 class _HomePageState extends State<HomePage> {
+  String name = '';
+
+  Future getName() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        setState(() {
+          name = snapshot.data()!['name'];
+        });
+      }
+    });
+  }
+
   @override
+  @override
+  void initState() {
+    super.initState();
+    getName();
+  }
+
   Widget build(BuildContext context) {
     final user = context.read<FirebaseAuthMethods>().user;
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         scrolledUnderElevation: 3,
-        title: Text('Home', style: TextStyle(color: Colors.grey)),
+        title: const Text('Home',
+            style: TextStyle(
+                color: MyColors.orange,
+                fontFamily: 'DancingScript',
+                fontSize: 35)),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
@@ -40,45 +71,45 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(top: 20, bottom: 20),
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
               width: double.infinity,
               child: Text(
-                "Welcome back, " + user.email!,
+                "Welcome back, $name",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30),
+                style: const TextStyle(fontSize: 30),
               ),
             ),
             Container(
-              margin: EdgeInsets.all(20),
+              margin: const EdgeInsets.all(20),
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(15)),
               ),
               child: Column(
                 children: [
                   Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
                           topRight: Radius.circular(10)),
                     ),
-                    padding: EdgeInsets.only(top: 20, bottom: 30),
+                    padding: const EdgeInsets.only(top: 20, bottom: 30),
                     width: double.infinity,
-                    child: Text(
+                    child: const Text(
                       "How are you feeling?",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 25),
                     ),
                   ),
                   Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(10),
                           bottomRight: Radius.circular(10)),
                     ),
-                    padding: EdgeInsets.only(bottom: 20),
+                    padding: const EdgeInsets.only(bottom: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -210,22 +241,23 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               width: double.infinity,
-              margin: EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
+              margin: const EdgeInsets.only(
+                  top: 20, bottom: 20, left: 20, right: 20),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 3,
                     blurRadius: 7,
-                    offset: Offset(0, 2), // changes position of shadow
+                    offset: const Offset(0, 2), // changes position of shadow
                   ),
                 ],
               ),
-              child: Center(
+              child: const Center(
                 child: Text(
                     style: TextStyle(fontSize: 20),
                     'Today\'s motivational quote:\nIt\'s okay to not be okay',
@@ -240,6 +272,6 @@ class _HomePageState extends State<HomePage> {
 
   void _push() {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => WordsPage()));
+        .push(MaterialPageRoute(builder: (context) => const WordsPage()));
   }
 }

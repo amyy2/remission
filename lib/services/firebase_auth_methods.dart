@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:remission/pages/login/sign_up.dart';
+import 'package:remission/pages/login/sign_up_1.dart';
 import '../pages/main_page.dart';
 import '../utilities/showSnackBar.dart';
 
@@ -25,7 +25,7 @@ class FirebaseAuthMethods {
       Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (BuildContext context) {
-            return SignUp();
+            return SignUp1();
           },
         ),
         (_) => false,
