@@ -24,14 +24,14 @@ var _physical_limitations = [
   "Not in the best shape, could improve",
   "I'm in great shape"
 ];
-String? currPLValue;
+String? currPLValue = 'N/A';
 var _diet = [
   "Very healthy",
   "Somewhat healthy",
   "Needs improvement",
   "Mostly unhealthy"
 ];
-String? currDValue;
+String? currDValue = 'N/A';
 bool stressChecked = false;
 bool sugarChecked = false;
 bool emotionChecked = false;
@@ -683,6 +683,7 @@ class _SignUp2State extends State<SignUp2> {
                   ),
                 ),
               ),
+              /*
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -701,6 +702,7 @@ class _SignUp2State extends State<SignUp2> {
                       fontFamily: 'Poppins', fontSize: 18, color: Colors.white),
                 ),
               ),
+              */
             ],
           ),
         ),

@@ -20,15 +20,17 @@ var _diet = [
   "Very healthy",
   "Somewhat healthy",
   "Needs improvement",
-  "Mostly unhealthy"
+  "Mostly unhealthy",
+  "N/A"
 ];
-var _genders = ["Female", "Male", "Nonbinary", "Other"];
+var _genders = ["Female", "Male", "Nonbinary", "Other", "N/A"];
 var _physical_limitations = [
   "Not mobile at all",
   "I have limited mobility",
   "No limitations but out of shape",
   "Not in the best shape, could improve",
-  "I'm in great shape"
+  "I'm in great shape",
+  "N/A"
 ];
 
 class EditProfilePage extends StatefulWidget {
@@ -71,6 +73,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
   bool easyChecked = false;
   bool othersChecked = false;
   bool satisfiedChecked = false;
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -968,6 +976,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                 ),
               ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 13, left: 20, right: 20),
+              width: double.infinity,
+              child: const Text('Please restart the app to see your changes.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 15, color: Color.fromARGB(255, 100, 100, 100))),
             ),
             const SizedBox(height: 20),
           ],

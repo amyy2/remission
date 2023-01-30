@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:remission/pages/home/check-in.dart';
 import 'package:remission/pages/home/home.dart';
 import 'package:remission/pages/home/recommendations.dart';
+
+import '../../colors.dart';
 
 class WordButton extends StatefulWidget {
   final String word;
@@ -22,8 +25,11 @@ class _WordButtonState extends State<WordButton> {
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+              side: const BorderSide(width: 0, style: BorderStyle.solid),
+              borderRadius: BorderRadius.circular(50)),
           backgroundColor: _pressed.contains(widget.word)
-              ? Color.fromARGB(255, 225, 225, 255)
+              ? Color.fromARGB(255, 232, 236, 252)
               : Colors.white),
       onPressed: () {
         setState(() {
@@ -48,7 +54,10 @@ class _WordButtonState extends State<WordButton> {
       },
       child: Text(
         widget.word,
-        style: TextStyle(color: Colors.black, fontSize: 20),
+        style: TextStyle(
+            color:
+                _pressed.contains(widget.word) ? MyColors.orange : Colors.black,
+            fontSize: 20),
       ),
     );
   }
@@ -69,6 +78,27 @@ class _WordsPageState extends State<WordsPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    const CheckInPage(),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+              ),
+            );
+          },
+          child: Container(
+            margin: const EdgeInsets.only(left: 20, top: 20),
+            child: const Icon(
+              (Icons.arrow_back),
+              size: 30,
+              color: MyColors.orange,
+            ),
+          ),
+        ),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
@@ -126,6 +156,16 @@ class _WordsPageState extends State<WordsPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                WordButton(word: 'stressed'),
+                WordButton(word: 'fearful'),
+                WordButton(word: 'worried'),
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
                 WordButton(word: 'achy'),
                 WordButton(word: 'constipated'),
                 WordButton(word: 'bloated'),
@@ -148,16 +188,6 @@ class _WordsPageState extends State<WordsPage> {
               children: [
                 WordButton(word: 'loved'),
                 WordButton(word: 'helpless'),
-                WordButton(word: 'stressed'),
-              ],
-            ),
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                WordButton(word: 'fearful'),
-                WordButton(word: 'worried'),
                 WordButton(word: 'lonely'),
               ],
             ),
@@ -177,7 +207,7 @@ class _WordsPageState extends State<WordsPage> {
             child: TextButton(
               onPressed: () {
                 setState(() {});
-                if (_pressed.length > 1) {
+                if (_pressed.length >= 1) {
                   Navigator.push(
                       context,
                       PageRouteBuilder(

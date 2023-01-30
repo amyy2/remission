@@ -15,7 +15,7 @@ import '../../colors.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 var _genders = ["Female", "Male", "Nonbinary", "Other"];
-String? currValue;
+String? currValue = 'N/A';
 bool radiationChecked = false;
 bool chemoChecked = false;
 bool immunoChecked = false;
@@ -557,6 +557,7 @@ class _SignUp1State extends State<SignUp1> {
                   ),
                 ),
               ),
+              /*
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -575,6 +576,7 @@ class _SignUp1State extends State<SignUp1> {
                       fontFamily: 'Poppins', fontSize: 18, color: Colors.white),
                 ),
               ),
+              */
             ],
           ),
         ),

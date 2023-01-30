@@ -17,35 +17,31 @@ import 'package:remission/utilities/showSnackBar.dart';
 import '../../colors.dart';
 import '../../services/firebase_auth_methods.dart';
 
-class ChangePasswordScreen extends StatefulWidget {
-  const ChangePasswordScreen({super.key});
+class ChangeEmailScreen extends StatefulWidget {
+  const ChangeEmailScreen({super.key});
 
   @override
-  _ChangePassswordScreenState createState() => _ChangePassswordScreenState();
+  _ChangeEmailScreenState createState() => _ChangeEmailScreenState();
 }
 
-class _ChangePassswordScreenState extends State<ChangePasswordScreen> {
-  final TextEditingController currPasswordController = TextEditingController();
-  final TextEditingController newPasswordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final currUser = FirebaseAuth.instance.currentUser;
 
-  changePassword({email, currPassword, newPassword}) async {
+  changeEmail({email, password}) async {
     try {
-      if (confirmPasswordController.text.isEmpty) {
-        showSnackBar(context, 'Passwords do not match');
-      } else if (confirmPasswordController.text != newPasswordController.text) {
-        showSnackBar(context, 'Passwords do not match');
+      if (emailController.text.isEmpty) {
+        showSnackBar(context, 'Please enter an email');
       } else {
         var cred =
-            EmailAuthProvider.credential(email: email, password: currPassword);
+            EmailAuthProvider.credential(email: email, password: password);
         await currUser!.reauthenticateWithCredential(cred).then((value) {
-          currUser!.updatePassword(newPassword);
+          currUser!.updateEmail(emailController.text);
 
-          showSnackBar(context, 'Password has been changed');
+          showSnackBar(context, 'Email has been changed');
           Navigator.push(
               context,
               PageRouteBuilder(
@@ -67,7 +63,7 @@ class _ChangePassswordScreenState extends State<ChangePasswordScreen> {
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         scrolledUnderElevation: 3,
-        title: const Text('Change password',
+        title: const Text('Change email',
             style: TextStyle(
                 color: MyColors.darkBlue, fontFamily: 'Poppins', fontSize: 25)),
         backgroundColor: Colors.white,
@@ -101,26 +97,17 @@ class _ChangePassswordScreenState extends State<ChangePasswordScreen> {
               padding:
                   const EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
               child: TextFormField(
-                controller: currPasswordController,
+                controller: emailController,
+                decoration: InputDecoration(labelText: 'New email'),
+                style: const TextStyle(fontSize: 20),
+              ),
+            ),
+            Container(
+              padding:
+                  const EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
+              child: TextFormField(
+                controller: passwordController,
                 decoration: InputDecoration(labelText: 'Current password'),
-                style: const TextStyle(fontSize: 20),
-              ),
-            ),
-            Container(
-              padding:
-                  const EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
-              child: TextFormField(
-                controller: newPasswordController,
-                decoration: InputDecoration(labelText: 'New password'),
-                style: const TextStyle(fontSize: 20),
-              ),
-            ),
-            Container(
-              padding:
-                  const EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
-              child: TextFormField(
-                controller: confirmPasswordController,
-                decoration: InputDecoration(labelText: 'Confirm new password'),
                 style: const TextStyle(fontSize: 20),
               ),
             ),
@@ -131,10 +118,9 @@ class _ChangePassswordScreenState extends State<ChangePasswordScreen> {
                 height: 50,
                 child: OutlinedButton(
                   onPressed: () async {
-                    await changePassword(
+                    await changeEmail(
                         email: currUser!.email,
-                        currPassword: currPasswordController.text,
-                        newPassword: newPasswordController.text);
+                        password: passwordController.text);
                   },
                   style: OutlinedButton.styleFrom(
                       backgroundColor: Color.fromARGB(255, 232, 236, 252),
@@ -143,7 +129,7 @@ class _ChangePassswordScreenState extends State<ChangePasswordScreen> {
                               width: 0, style: BorderStyle.solid),
                           borderRadius: BorderRadius.circular(50))),
                   child: const Text(
-                    'Change password',
+                    'Change email',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,

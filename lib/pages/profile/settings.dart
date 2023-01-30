@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:remission/pages/login/welcome_screen.dart';
+import 'package:remission/pages/profile/change_email.dart';
 import 'package:remission/pages/profile/change_password.dart';
 import 'package:remission/pages/profile/edit_profile.dart';
 import 'package:remission/pages/profile/profile.dart';
@@ -23,45 +24,8 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final TextEditingController nameController = TextEditingController();
-
-  String name = '';
-  String age = '';
-  String gender = '';
-  String height = '';
-  String weight = '';
-  String diagnosis = '';
-  String dateOfDiagnosis = '';
-
-  Future getUserData() async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get()
-        .then((snapshot) async {
-      if (snapshot.exists) {
-        setState(() {
-          name = snapshot.data()!['name'];
-          age = snapshot.data()!['age'];
-          gender = snapshot.data()!['gender'];
-          height = snapshot.data()!['height'];
-          weight = snapshot.data()!['weight'];
-          diagnosis = snapshot.data()!['diagnosis'];
-          dateOfDiagnosis = snapshot.data()!['date_of_diagnosis'];
-        });
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getUserData();
-  }
-
   @override
   Widget build(BuildContext context) {
-    final user = context.read<FirebaseAuthMethods>().user;
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -130,7 +94,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        const EditProfilePage(),
+                        const ChangeEmailScreen(),
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,
                   ),
@@ -188,17 +152,37 @@ class _SettingsPageState extends State<SettingsPage> {
           Container(
             width: double.infinity,
             child: GestureDetector(
-              onTap: () {
-                context.read<FirebaseAuthMethods>().deleteAccount(context);
-                Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return const WelcomeScreen();
-                    },
-                  ),
-                  (_) => false,
-                );
-              },
+              onTap: () => showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  content: const Text(
+                      'Are you sure you want to delete your account? This cannot be undone.'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'Cancel'),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () => [
+                        context
+                            .read<FirebaseAuthMethods>()
+                            .deleteAccount(context),
+                        Navigator.pop(context, 'OK'),
+                        Navigator.of(context, rootNavigator: true)
+                            .pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return WelcomeScreen();
+                            },
+                          ),
+                          (_) => false,
+                        ),
+                      ],
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ),
+              ),
               child: const Text(
                 'Delete account',
                 textAlign: TextAlign.center,

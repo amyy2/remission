@@ -20,7 +20,7 @@ class MainPage extends StatefulWidget {
 PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
 List<Widget> _buildScreens() {
-  return [HomePage(), GoalsPage(), ExplorePage(), ProfilePage()];
+  return [HomePage(), GoalsPage(), ExplorePage(), const ProfilePage()];
 }
 
 List<PersistentBottomNavBarItem> _navBarsItems() {
@@ -29,25 +29,25 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
       icon: Icon(Icons.home),
       title: ("Home"),
       activeColorPrimary: MyColors.darkBlue,
-      inactiveColorPrimary: Colors.grey,
+      inactiveColorPrimary: Colors.white,
     ),
     PersistentBottomNavBarItem(
       icon: Icon(Icons.check_circle_outline),
       title: ("Goals"),
       activeColorPrimary: MyColors.darkBlue,
-      inactiveColorPrimary: Colors.grey,
+      inactiveColorPrimary: Colors.white,
     ),
     PersistentBottomNavBarItem(
       icon: Icon(Icons.search),
       title: ("Explore"),
       activeColorPrimary: MyColors.darkBlue,
-      inactiveColorPrimary: Colors.grey,
+      inactiveColorPrimary: Colors.white,
     ),
     PersistentBottomNavBarItem(
       icon: Icon(Icons.account_circle_outlined),
       title: ("Profile"),
       activeColorPrimary: MyColors.darkBlue,
-      inactiveColorPrimary: Colors.grey,
+      inactiveColorPrimary: Colors.white,
     ),
   ];
 }
@@ -61,7 +61,7 @@ class _MainPageState extends State<MainPage> {
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,
-      backgroundColor: Colors.white, // Default is Colors.white.
+      backgroundColor: MyColors.mediumBlue, // Default is Colors.white.
       handleAndroidBackButtonPress: true, // Default is true.
       resizeToAvoidBottomInset:
           true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.

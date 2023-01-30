@@ -26,7 +26,7 @@ class _GoalsPageState extends State<GoalsPage> {
             style: TextStyle(
                 color: MyColors.orange,
                 fontFamily: 'DancingScript',
-                fontSize: 35)),
+                fontSize: 40)),
         backgroundColor: Colors.white,
         elevation: 0,
       ),

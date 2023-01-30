@@ -43,6 +43,7 @@ dependencies:
   flutterfire_ui: ^0.4.3+20
   dropdown_button2: ^1.9.2
   provider: ^6.0.5
+  url_launcher: ^6.1.8
 
 
 dev_dependencies:
@@ -71,6 +72,9 @@ flutter:
   assets:
     - images/remission-logo.png
     - images/background.jpg
+    - images/ribbon.png
+    - images/ribbon_1.jpg
+    - images/ribbon_2.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
@@ -106,3 +110,6 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+test:
+  - test/recommendation_algorithm_test.dart

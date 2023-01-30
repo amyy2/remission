@@ -44,6 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget build(BuildContext context) {
+    final user = context.read<FirebaseAuthMethods>().user;
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -52,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
             style: TextStyle(
                 color: MyColors.orange,
                 fontFamily: 'DancingScript',
-                fontSize: 35)),
+                fontSize: 40)),
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
@@ -83,6 +84,18 @@ class _ProfilePageState extends State<ProfilePage> {
               width: double.infinity,
               child: Text(
                 name,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: MyColors.darkBlue),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
+              width: double.infinity,
+              child: Text(
+                "Email: " + user.email!,
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 20),
               ),
@@ -122,6 +135,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 300),
+              child: const Image(
+                  image: AssetImage('images/ribbon.png'), width: 1100),
             ),
           ],
         ),
