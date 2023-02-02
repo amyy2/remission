@@ -60,10 +60,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 
   void addUserDetails(String name, String email, String uid) async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .set({'name': name, 'email': email, 'id': uid});
+    await FirebaseFirestore.instance.collection('users').doc(uid).set({
+      'name': name,
+      'email': email,
+      'id': uid,
+      'completed_tasks': [],
+      'unlocked_tasks': [],
+      'goals': []
+    });
   }
 
   @override

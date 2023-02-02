@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -8,6 +9,7 @@ import 'package:remission/pages/home/home.dart';
 import 'package:remission/pages/home/recommendations.dart';
 
 import '../../colors.dart';
+import '../../recommendation_algorithm.dart';
 
 class WordButton extends StatefulWidget {
   final String word;
@@ -205,7 +207,9 @@ class _WordsPageState extends State<WordsPage> {
           Container(
             margin: EdgeInsets.only(top: 60),
             child: TextButton(
-              onPressed: () {
+              onPressed: () async {
+                List tasks = await recommendationAlgorithm(
+                    FirebaseFirestore.instance, 'tasks', _pressed, []);
                 setState(() {});
                 if (_pressed.length >= 1) {
                   Navigator.push(
@@ -213,7 +217,7 @@ class _WordsPageState extends State<WordsPage> {
                       PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
-                                  RecommendationsPage(pressedWords: _pressed),
+                                  RecommendationsPage(recommendedTasks: tasks),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
                             const begin = Offset(1.0, 0.0);

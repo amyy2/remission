@@ -168,15 +168,16 @@ class _SettingsPageState extends State<SettingsPage> {
                             .read<FirebaseAuthMethods>()
                             .deleteAccount(context),
                         Navigator.pop(context, 'OK'),
+                        context.read<FirebaseAuthMethods>().signOut(context),
                         Navigator.of(context, rootNavigator: true)
                             .pushAndRemoveUntil(
                           MaterialPageRoute(
                             builder: (BuildContext context) {
-                              return WelcomeScreen();
+                              return const WelcomeScreen();
                             },
                           ),
                           (_) => false,
-                        ),
+                        )
                       ],
                       child: const Text('OK'),
                     ),
