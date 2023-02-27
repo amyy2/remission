@@ -25,6 +25,7 @@ class CheckInPage extends StatefulWidget {
 }
 
 String _mood = '';
+String _icon = '';
 var _angry_color = Colors.black;
 var _sad_color = Colors.black;
 var _meh_color = Colors.black;
@@ -135,6 +136,7 @@ class _CheckInPageState extends State<CheckInPage> {
                             onPressed: () {
                               setState(() {
                                 _mood = 'angry';
+                                _icon = 'faceAngry';
                                 _angry_color = MyColors.mediumBlue;
                                 _sad_color = Colors.black;
                                 _meh_color = Colors.black;
@@ -146,7 +148,7 @@ class _CheckInPageState extends State<CheckInPage> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const WordsPage(),
+                                      WordsPage(feeling: _mood),
                                   transitionDuration: Duration.zero,
                                   reverseTransitionDuration: Duration.zero,
                                 ),
@@ -162,6 +164,7 @@ class _CheckInPageState extends State<CheckInPage> {
                             onPressed: () {
                               setState(() {
                                 _mood = 'sad';
+                                _icon = 'faceSadTear';
                                 _angry_color = Colors.black;
                                 _sad_color = MyColors.mediumBlue;
                                 _meh_color = Colors.black;
@@ -173,7 +176,7 @@ class _CheckInPageState extends State<CheckInPage> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const WordsPage(),
+                                      WordsPage(feeling: _mood),
                                   transitionDuration: Duration.zero,
                                   reverseTransitionDuration: Duration.zero,
                                 ),
@@ -189,6 +192,7 @@ class _CheckInPageState extends State<CheckInPage> {
                             onPressed: () {
                               setState(() {
                                 _mood = 'meh';
+                                _icon = 'faceMeh';
                                 _angry_color = Colors.black;
                                 _sad_color = Colors.black;
                                 _meh_color = MyColors.mediumBlue;
@@ -200,7 +204,7 @@ class _CheckInPageState extends State<CheckInPage> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const WordsPage(),
+                                      WordsPage(feeling: _mood),
                                   transitionDuration: Duration.zero,
                                   reverseTransitionDuration: Duration.zero,
                                 ),
@@ -216,6 +220,7 @@ class _CheckInPageState extends State<CheckInPage> {
                             onPressed: () {
                               setState(() {
                                 _mood = 'good';
+                                _icon = 'faceSmile';
                                 _angry_color = Colors.black;
                                 _sad_color = Colors.black;
                                 _meh_color = Colors.black;
@@ -227,7 +232,7 @@ class _CheckInPageState extends State<CheckInPage> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const WordsPage(),
+                                      WordsPage(feeling: _mood),
                                   transitionDuration: Duration.zero,
                                   reverseTransitionDuration: Duration.zero,
                                 ),
@@ -243,6 +248,7 @@ class _CheckInPageState extends State<CheckInPage> {
                           onPressed: () {
                             setState(() {
                               _mood = 'great';
+                              _icon = 'faceGrin';
                               _angry_color = Colors.black;
                               _sad_color = Colors.black;
                               _meh_color = Colors.black;
@@ -254,7 +260,7 @@ class _CheckInPageState extends State<CheckInPage> {
                               PageRouteBuilder(
                                 pageBuilder:
                                     (context, animation, secondaryAnimation) =>
-                                        const WordsPage(),
+                                        WordsPage(feeling: _icon),
                                 transitionDuration: Duration.zero,
                                 reverseTransitionDuration: Duration.zero,
                               ),
@@ -277,10 +283,5 @@ class _CheckInPageState extends State<CheckInPage> {
         ],
       ),
     );
-  }
-
-  void _push() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const WordsPage()));
   }
 }

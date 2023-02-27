@@ -4,14 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutterfire_ui/auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:remission/pages/login/welcome_screen.dart';
 import 'package:remission/pages/profile/settings.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 import '../../colors.dart';
 import '../../services/firebase_auth_methods.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -37,12 +40,43 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> moods = [];
+  final Map moodsMap = {};
+  bool finished = false;
+
+  Future getMoods() async {
+    await FirebaseFirestore.instance
+        .collection('mood_history')
+        .where("user_id", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((snapshot) async {
+      setState(
+        () {
+          moods = snapshot.docs;
+          for (var mood in moods) {
+            moodsMap[DateFormat('yyyy-MMM-dd').format(
+                    DateTime.parse(mood.data()['date'].toDate().toString()))] =
+                mood.data()['mood'];
+          }
+          finished = true;
+        },
+      );
+    });
+  }
+
   @override
   void initState() {
+    getName();
+    getMoods();
     super.initState();
+  }
+
+  Future<void> _pullToRefresh() async {
+    getMoods();
     getName();
   }
 
+  @override
   Widget build(BuildContext context) {
     final user = context.read<FirebaseAuthMethods>().user;
     return Scaffold(
@@ -76,72 +110,232 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(top: 20),
-              width: double.infinity,
-              child: Text(
-                name,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: MyColors.darkBlue),
+      body: RefreshIndicator(
+        onRefresh: _pullToRefresh,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 20),
+                width: double.infinity,
+                child: Text(
+                  name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: MyColors.darkBlue),
+                ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 20, bottom: 20),
-              width: double.infinity,
-              child: Text(
-                "Email: " + user.email!,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 20),
+              Container(
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
+                width: double.infinity,
+                child: Text(
+                  "Email: " + user.email!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 20),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-              child: SizedBox(
-                width: 300,
-                height: 50,
-                child: OutlinedButton(
-                  onPressed: () {
-                    context.read<FirebaseAuthMethods>().signOut(context);
-                    Navigator.of(context, rootNavigator: true)
-                        .pushAndRemoveUntil(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return const WelcomeScreen();
-                        },
-                      ),
-                      (_) => false,
-                    );
-                  },
-                  style: OutlinedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 232, 236, 252),
-                      shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                              width: 0, style: BorderStyle.solid),
-                          borderRadius: BorderRadius.circular(50))),
-                  child: const Text(
-                    'Sign out',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Poppins',
-                        fontSize: 18,
-                        color: MyColors.orange),
+              Padding(
+                padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                child: SizedBox(
+                  width: 300,
+                  height: 50,
+                  child: OutlinedButton(
+                    onPressed: () {
+                      context.read<FirebaseAuthMethods>().signOut(context);
+                      Navigator.of(context, rootNavigator: true)
+                          .pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return const WelcomeScreen();
+                          },
+                        ),
+                        (_) => false,
+                      );
+                    },
+                    style: OutlinedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 232, 236, 252),
+                        shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                                width: 0, style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(50))),
+                    child: const Text(
+                      'Sign out',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Poppins',
+                          fontSize: 18,
+                          color: MyColors.orange),
+                    ),
                   ),
                 ),
               ),
-            ),
+              Container(
+                padding: const EdgeInsets.only(top: 40, bottom: 5),
+                width: double.infinity,
+                child: Text(
+                  "Summary",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 18),
+                ),
+              ),
+              TableCalendar(
+                headerStyle: HeaderStyle(
+                  formatButtonVisible: false,
+                ),
+                firstDay: DateTime.utc(2010, 10, 16),
+                lastDay: DateTime.utc(2030, 3, 14),
+                focusedDay: DateTime.now(),
+                calendarBuilders:
+                    CalendarBuilders(todayBuilder: (context, date, _) {
+                  if (finished) {
+                    if (moodsMap.containsKey(
+                        DateFormat('yyyy-MMM-dd').format(date).toString())) {
+                      IconData icon = FontAwesomeIcons.faceMeh;
+                      Color color = Colors.yellow;
+                      switch (moodsMap[
+                          DateFormat('yyyy-MMM-dd').format(date).toString()]) {
+                        case 'faceGrin':
+                          {
+                            icon = FontAwesomeIcons.faceGrin;
+                            color = Colors.green;
+                          }
+                          break;
+                        case 'faceSmile':
+                          {
+                            icon = FontAwesomeIcons.faceSmile;
+                            color = Colors.orange;
+                          }
+                          break;
+                        case 'faceMeh':
+                          {
+                            icon = FontAwesomeIcons.faceMeh;
+                            color = Colors.yellow;
+                          }
+                          break;
+                        case 'faceSadTear':
+                          {
+                            icon = FontAwesomeIcons.faceSadTear;
+                            color = Colors.blue;
+                          }
+                          break;
+                        case 'faceAngry':
+                          {
+                            icon = FontAwesomeIcons.faceAngry;
+                            color = Colors.red;
+                          }
+                          break;
+                      }
+                      return Stack(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(14),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: MyColors.lightBlue,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Text(
+                              date.day.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: FaIcon(
+                              icon,
+                              color: color,
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                  }
+                }, defaultBuilder: (context, date, _) {
+                  if (finished) {
+                    if (moodsMap.containsKey(
+                        DateFormat('yyyy-MMM-dd').format(date).toString())) {
+                      IconData icon = FontAwesomeIcons.faceMeh;
+                      Color color = Colors.yellow;
+                      switch (moodsMap[
+                          DateFormat('yyyy-MMM-dd').format(date).toString()]) {
+                        case 'faceGrin':
+                          {
+                            icon = FontAwesomeIcons.faceGrin;
+                            color = Colors.green;
+                          }
+                          break;
+                        case 'faceSmile':
+                          {
+                            icon = FontAwesomeIcons.faceSmile;
+                            color = Colors.orange;
+                          }
+                          break;
+                        case 'faceMeh':
+                          {
+                            icon = FontAwesomeIcons.faceMeh;
+                            color = Colors.yellow;
+                          }
+                          break;
+                        case 'faceSadTear':
+                          {
+                            icon = FontAwesomeIcons.faceSadTear;
+                            color = Colors.blue;
+                          }
+                          break;
+                        case 'faceAngry':
+                          {
+                            icon = FontAwesomeIcons.faceAngry;
+                            color = Colors.red;
+                          }
+                          break;
+                      }
+                      return Stack(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(4),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Text(
+                              date.day.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: FaIcon(
+                              icon,
+                              color: color,
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                  }
+                  return null;
+                }),
+              ),
+
+              /*
             Container(
-              margin: const EdgeInsets.only(top: 300),
+              margin: const EdgeInsets.only(top: 0),
               child: const Image(
-                  image: AssetImage('images/ribbon.png'), width: 1100),
+                  image: AssetImage('images/ribbon.png'), width: 500),
             ),
-          ],
+            */
+            ],
+          ),
         ),
       ),
     );

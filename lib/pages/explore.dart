@@ -51,6 +51,28 @@ void removeFromCompleted(List task) async {
   });
 }
 
+void addToGoals(List task) async {
+  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    if (user != null) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .update({'goals': FieldValue.arrayUnion(task)});
+    }
+  });
+}
+
+void removeFromGoals(List task) async {
+  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    if (user != null) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .update({'goals': FieldValue.arrayRemove(task)});
+    }
+  });
+}
+
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
 
@@ -77,9 +99,31 @@ class _ExplorePageState extends State<ExplorePage> {
     });
   }
 
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> tasks = [];
+  Map tasksMap = {};
+  String image = 'images/white.png';
+  bool finished = false;
+
+  Future getData() async {
+    await FirebaseFirestore.instance.collection('tasks').get().then(
+      (snapshot) async {
+        setState(
+          () {
+            tasks = snapshot.docs;
+            for (var task in tasks) {
+              tasksMap[task.data()['title']] = task.data();
+              finished = true;
+            }
+          },
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     getUnlocked();
+    getData();
     super.initState();
   }
 
@@ -124,45 +168,55 @@ class _ExplorePageState extends State<ExplorePage> {
               ),
               Container(
                 padding: const EdgeInsets.only(top: 13),
-                height: 170.0,
+                height: 190.0,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
                     const SizedBox(width: 20),
-                    Task(
-                        'Print CFF list',
-                        'Print list of Cancer Fighting Foods',
-                        const PrintCFFListPage(),
-                        'print_cff_list',
-                        'images/task_thumbnails/1.jpg'),
+                    if (finished)
+                      Task(
+                          tasksMap['Print CFF list']['title'],
+                          tasksMap['Print CFF list']['description'],
+                          PrintCFFListPage(
+                              image: tasksMap['Print CFF list']['image']),
+                          tasksMap['Print CFF list']['name'],
+                          tasksMap['Print CFF list']['image']),
                     const SizedBox(width: 20),
-                    Task(
-                        'Choose CFFs',
-                        'Choose CFFs to add to your diet',
-                        const ChooseCFFPage(),
-                        'choose_cffs',
-                        'images/task_thumbnails/2.jpg'),
+                    if (finished)
+                      Task(
+                          tasksMap['Choose CFFs']['title'],
+                          tasksMap['Choose CFFs']['description'],
+                          ChooseCFFPage(
+                              image: tasksMap['Choose CFFs']['image']),
+                          tasksMap['Choose CFFs']['name'],
+                          tasksMap['Choose CFFs']['image']),
                     const SizedBox(width: 20),
-                    Task(
-                        'Make grocery list',
-                        'Choose 5 healthy food swaps for your grocery list',
-                        const MakeGroceryListPage(),
-                        'make_grocery_list',
-                        'images/task_thumbnails/3.jpg'),
+                    if (finished)
+                      Task(
+                          tasksMap['Make grocery list']['title'],
+                          tasksMap['Make grocery list']['description'],
+                          MakeGroceryListPage(
+                              image: tasksMap['Make grocery list']['image']),
+                          tasksMap['Make grocery list']['name'],
+                          tasksMap['Make grocery list']['image']),
                     const SizedBox(width: 20),
-                    Task(
-                        'Food journal',
-                        'Start a daily food journal',
-                        const FoodJournalPage(),
-                        'food_journal',
-                        'images/task_thumbnails/4.jpg'),
+                    if (finished)
+                      Task(
+                          tasksMap['Food journal']['title'],
+                          tasksMap['Food journal']['description'],
+                          FoodJournalPage(
+                              image: tasksMap['Food journal']['image']),
+                          tasksMap['Food journal']['name'],
+                          tasksMap['Food journal']['image']),
                     const SizedBox(width: 20),
-                    Task(
-                        'SMART goals',
-                        'Identify SMART goals for dietary change',
-                        const DietarySMARTGoalsPage(),
-                        'dietary_smart_goals',
-                        'images/task_thumbnails/5.jpg'),
+                    if (finished)
+                      Task(
+                          tasksMap['Dietary SMART goals']['title'],
+                          tasksMap['Dietary SMART goals']['description'],
+                          DietarySMARTGoalsPage(
+                              image: tasksMap['Dietary SMART goals']['image']),
+                          tasksMap['Dietary SMART goals']['name'],
+                          tasksMap['Dietary SMART goals']['image']),
                     const SizedBox(width: 20),
                   ],
                 ),
@@ -177,45 +231,60 @@ class _ExplorePageState extends State<ExplorePage> {
               ),
               Container(
                 padding: const EdgeInsets.only(top: 13),
-                height: 170.0,
+                height: 190.0,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
                     const SizedBox(width: 20),
-                    Task(
-                        'SMART goals',
-                        'Identify SMART goals for physical activity',
-                        const PhysicalSMARTGoalsPage(),
-                        'physical_smart_goals',
-                        'images/task_thumbnails/6.jpg'),
+                    if (finished)
+                      Task(
+                        tasksMap['Physical SMART goals']['title'],
+                        tasksMap['Physical SMART goals']['description'],
+                        PhysicalSMARTGoalsPage(
+                          image: tasksMap['Physical SMART goals']['image'],
+                        ),
+                        tasksMap['Physical SMART goals']['name'],
+                        tasksMap['Physical SMART goals']['image'],
+                      ),
                     const SizedBox(width: 20),
-                    Task(
-                        'Action plan',
-                        'Make an action plan for the next seven days',
-                        const ActionPlanPage(),
-                        'action_plan',
-                        'images/task_thumbnails/7.jpg'),
+                    if (finished)
+                      Task(
+                          tasksMap['Action plan']['title'],
+                          tasksMap['Action plan']['description'],
+                          ActionPlanPage(
+                              image: tasksMap['Action plan']['image']),
+                          tasksMap['Action plan']['name'],
+                          tasksMap['Action plan']['image']),
                     const SizedBox(width: 20),
-                    Task(
-                        'Staying motivated',
-                        'Plan how to stay motivated',
-                        const StayingMotivatedPage(),
-                        'staying_motivated',
-                        'images/task_thumbnails/8.jpg'),
+                    if (finished)
+                      Task(
+                        tasksMap['Staying motivated']['title'],
+                        tasksMap['Staying motivated']['description'],
+                        StayingMotivatedPage(
+                          image: tasksMap['Staying motivated']['image'],
+                        ),
+                        tasksMap['Staying motivated']['name'],
+                        tasksMap['Staying motivated']['image'],
+                      ),
                     const SizedBox(width: 20),
-                    Task(
-                        'Roadblocks',
-                        'Plan how to overcome roadblocks',
-                        const RoadblocksPage(),
-                        'roadblocks',
-                        'images/task_thumbnails/9.jpg'),
+                    if (finished)
+                      Task(
+                        tasksMap['Roadblocks']['title'],
+                        tasksMap['Roadblocks']['description'],
+                        RoadblocksPage(image: tasksMap['Roadblocks']['image']),
+                        tasksMap['Roadblocks']['name'],
+                        tasksMap['Roadblocks']['image'],
+                      ),
                     const SizedBox(width: 20),
-                    Task(
-                        'Rewarding yourself',
-                        'Plan how you\'ll reward yourself',
-                        const RewardingYourselfPage(),
-                        'rewarding_yourself',
-                        'images/task_thumbnails/10.jpg'),
+                    if (finished)
+                      Task(
+                        tasksMap['Rewarding yourself']['title'],
+                        tasksMap['Rewarding yourself']['description'],
+                        RewardingYourselfPage(
+                            image: tasksMap['Rewarding yourself']['image']),
+                        tasksMap['Rewarding yourself']['name'],
+                        tasksMap['Rewarding yourself']['image'],
+                      ),
                     const SizedBox(width: 20),
                   ],
                 ),
@@ -230,45 +299,59 @@ class _ExplorePageState extends State<ExplorePage> {
               ),
               Container(
                 padding: const EdgeInsets.only(top: 13),
-                height: 170.0,
+                height: 190.0,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
                     const SizedBox(width: 20),
-                    Task(
-                        'Sleep log',
-                        'Create a sleep log for the next week',
-                        const SleepLogPage(),
-                        'sleep_log',
-                        'images/task_thumbnails/11.jpg'),
+                    if (finished)
+                      Task(
+                        tasksMap['Sleep log']['title'],
+                        tasksMap['Sleep log']['description'],
+                        SleepLogPage(
+                          image: tasksMap['Sleep log']['image'],
+                        ),
+                        tasksMap['Sleep log']['name'],
+                        tasksMap['Sleep log']['image'],
+                      ),
                     const SizedBox(width: 20),
-                    Task(
-                        'Sleep tips',
-                        'Learn tips for better sleep',
-                        const SleepTipsPage(),
-                        'sleep_tips',
-                        'images/task_thumbnails/12.jpg'),
+                    if (finished)
+                      Task(
+                        tasksMap['Sleep tips']['title'],
+                        tasksMap['Sleep tips']['description'],
+                        SleepTipsPage(image: tasksMap['Sleep tips']['image']),
+                        tasksMap['Sleep tips']['name'],
+                        tasksMap['Sleep tips']['image'],
+                      ),
                     const SizedBox(width: 20),
-                    Task(
-                        'Meditation I',
-                        'A guided meditation before sleep',
-                        const GuidedMeditation1Page(),
-                        'guided_meditation_1',
-                        'images/task_thumbnails/13.jpg'),
+                    if (finished)
+                      Task(
+                        tasksMap['Meditation I']['title'],
+                        tasksMap['Meditation I']['description'],
+                        GuidedMeditation1Page(
+                            image: tasksMap['Meditation I']['image']),
+                        tasksMap['Meditation I']['name'],
+                        tasksMap['Meditation I']['image'],
+                      ),
                     const SizedBox(width: 20),
-                    Task(
-                        'Journaling',
-                        'An exercise to help you start journaling',
-                        const JournalingPage(),
-                        'journaling',
-                        'images/task_thumbnails/14.jpg'),
+                    if (finished)
+                      Task(
+                        tasksMap['Journaling']['title'],
+                        tasksMap['Journaling']['description'],
+                        JournalingPage(image: tasksMap['Journaling']['image']),
+                        tasksMap['Journaling']['name'],
+                        tasksMap['Journaling']['image'],
+                      ),
                     const SizedBox(width: 20),
-                    Task(
-                        'Meditation II',
-                        'A guided meditation before sleep',
-                        const GuidedMeditation2Page(),
-                        'guided_meditation_2',
-                        'images/task_thumbnails/15.jpg'),
+                    if (finished)
+                      Task(
+                        tasksMap['Meditation II']['title'],
+                        tasksMap['Meditation II']['description'],
+                        GuidedMeditation2Page(
+                            image: tasksMap['Meditation II']['image']),
+                        tasksMap['Meditation II']['name'],
+                        tasksMap['Meditation II']['image'],
+                      ),
                     const SizedBox(width: 20),
                   ],
                 ),
@@ -283,33 +366,57 @@ class _ExplorePageState extends State<ExplorePage> {
               ),
               Container(
                 padding: const EdgeInsets.only(top: 13),
-                height: 170.0,
+                height: 190.0,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
                     const SizedBox(width: 20),
-                    Task(
-                        'Problem solving',
-                        'Description',
-                        const ProblemSolvingPage(),
-                        'problem_solving',
-                        'images/task_thumbnails/16.jpg'),
+                    if (finished)
+                      Task(
+                        tasksMap['Problem solving']['title'],
+                        tasksMap['Problem solving']['description'],
+                        ProblemSolvingPage(
+                            image: tasksMap['Problem solving']['image']),
+                        tasksMap['Problem solving']['name'],
+                        tasksMap['Problem solving']['image'],
+                      ),
                     const SizedBox(width: 20),
-                    Task('Balance', 'Description', const BalancePage(),
-                        'balance', 'images/task_thumbnails/17.jpg'),
+                    if (finished)
+                      Task(
+                        tasksMap['Balance']['title'],
+                        tasksMap['Balance']['description'],
+                        BalancePage(image: tasksMap['Balance']['image']),
+                        tasksMap['Balance']['name'],
+                        tasksMap['Balance']['image'],
+                      ),
                     const SizedBox(width: 20),
-                    Task(
-                        'Coping with fears',
-                        'Description',
-                        const CopingWithFearsPage(),
-                        'coping_with_fears',
-                        'images/task_thumbnails/18.jpg'),
+                    if (finished)
+                      Task(
+                        tasksMap['Coping with fears']['title'],
+                        tasksMap['Coping with fears']['description'],
+                        CopingWithFearsPage(
+                            image: tasksMap['Coping with fears']['image']),
+                        tasksMap['Coping with fears']['name'],
+                        tasksMap['Coping with fears']['image'],
+                      ),
                     const SizedBox(width: 20),
-                    Task('Gratitude', 'Description', const GratitudePage(),
-                        'gratitude', 'images/task_thumbnails/19.jpg'),
+                    if (finished)
+                      Task(
+                        tasksMap['Gratitude']['title'],
+                        tasksMap['Gratitude']['description'],
+                        GratitudePage(image: tasksMap['Gratitude']['image']),
+                        tasksMap['Gratitude']['name'],
+                        tasksMap['Gratitude']['image'],
+                      ),
                     const SizedBox(width: 20),
-                    Task('Worry log', 'Description', const WorryLogPage(),
-                        'worry_log', 'images/task_thumbnails/20.jpg'),
+                    if (finished)
+                      Task(
+                        tasksMap['Worry log']['title'],
+                        tasksMap['Worry log']['description'],
+                        WorryLogPage(image: tasksMap['Worry log']['image']),
+                        tasksMap['Worry log']['name'],
+                        tasksMap['Worry log']['image'],
+                      ),
                     const SizedBox(width: 20),
                   ],
                 ),
@@ -389,7 +496,7 @@ class _ExplorePageState extends State<ExplorePage> {
                 ),
           Container(
             width: 150,
-            height: 33,
+            height: 53,
             child: Text(description,
                 textAlign: TextAlign.left,
                 style: const TextStyle(fontSize: 11)),

@@ -17,13 +17,15 @@ class TaskPageWithURL extends StatefulWidget {
   final String description;
   final String URLname;
   final String dbName;
+  final String image;
 
   TaskPageWithURL(
       {required this.URL,
       required this.title,
       required this.description,
       required this.URLname,
-      required this.dbName});
+      required this.dbName,
+      required this.image});
 
   @override
   State<TaskPageWithURL> createState() => _TaskState();
@@ -54,9 +56,26 @@ class _TaskState extends State<TaskPageWithURL> {
     });
   }
 
+  List goals = [];
+
+  Future getGoals() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        setState(() {
+          goals = snapshot.data()!['goals'];
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     getCompleted();
+    getGoals();
     super.initState();
   }
 
@@ -70,15 +89,7 @@ class _TaskState extends State<TaskPageWithURL> {
         elevation: 0,
         leading: GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const ExplorePage(),
-                transitionDuration: Duration.zero,
-                reverseTransitionDuration: Duration.zero,
-              ),
-            );
+            Navigator.of(context).pop();
           },
           child: Container(
             margin: const EdgeInsets.only(left: 20, top: 20),
@@ -94,12 +105,22 @@ class _TaskState extends State<TaskPageWithURL> {
         child: Column(
           children: [
             Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Color.fromARGB(255, 232, 236, 252),
-              ),
               width: 300.0,
               height: 200.0,
+              child: AspectRatio(
+                aspectRatio: 300 / 200,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                      fit: BoxFit.fitWidth,
+                      alignment: FractionalOffset.center,
+                      image: AssetImage(widget.image),
+                    )),
+                  ),
+                ),
+              ),
             ),
             Container(
               padding: EdgeInsets.only(top: 16, left: 20, right: 20),
@@ -134,22 +155,42 @@ class _TaskState extends State<TaskPageWithURL> {
                 width: 300,
                 height: 50,
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    goals.contains(widget.dbName)
+                        ? {
+                            removeFromGoals([widget.dbName]),
+                            getGoals()
+                          }
+                        : {
+                            addToGoals([widget.dbName]),
+                            getGoals()
+                          };
+                  },
                   style: OutlinedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 232, 236, 252),
                       shape: RoundedRectangleBorder(
                           side: const BorderSide(
                               width: 0, style: BorderStyle.solid),
                           borderRadius: BorderRadius.circular(50))),
-                  child: const Text(
-                    'Add task to goals',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Poppins',
-                        fontSize: 18,
-                        color: MyColors.orange),
-                  ),
+                  child: goals.contains(widget.dbName)
+                      ? Text(
+                          'Remove task from goals',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Poppins',
+                              fontSize: 18,
+                              color: MyColors.orange),
+                        )
+                      : Text(
+                          'Add task to goals',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Poppins',
+                              fontSize: 18,
+                              color: MyColors.orange),
+                        ),
                 ),
               ),
             ),
@@ -161,8 +202,14 @@ class _TaskState extends State<TaskPageWithURL> {
                 child: OutlinedButton(
                   onPressed: () {
                     completed.contains(widget.dbName)
-                        ? removeFromCompleted([widget.dbName])
-                        : addToCompleted([widget.dbName]);
+                        ? {
+                            removeFromCompleted([widget.dbName]),
+                            getCompleted()
+                          }
+                        : {
+                            addToCompleted([widget.dbName]),
+                            getCompleted()
+                          };
                   },
                   style: OutlinedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 232, 236, 252),

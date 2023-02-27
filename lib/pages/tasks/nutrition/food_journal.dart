@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../widgets/task_page_with_URL.dart';
 
 class FoodJournalPage extends StatefulWidget {
-  const FoodJournalPage({super.key});
+  final String image;
+  FoodJournalPage({required this.image});
 
   @override
   State<FoodJournalPage> createState() => _FoodJournalState();
@@ -16,6 +17,7 @@ class _FoodJournalState extends State<FoodJournalPage> {
         title: 'Food journal',
         description: 'Complete the exercise below.',
         URLname: 'Exercise',
-        dbName: 'food_journal');
+        dbName: 'food_journal',
+        image: widget.image);
   }
 }

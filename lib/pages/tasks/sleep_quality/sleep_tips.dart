@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../widgets/task_page_with_URL.dart';
 
 class SleepTipsPage extends StatefulWidget {
-  const SleepTipsPage({super.key});
+  final String image;
+  SleepTipsPage({required this.image});
 
   @override
   State<SleepTipsPage> createState() => _SleepTipsState();
@@ -16,6 +17,7 @@ class _SleepTipsState extends State<SleepTipsPage> {
         title: 'Sleep tips',
         description: 'Complete the exercise below.',
         URLname: 'Exercise',
-        dbName: 'sleep_tips');
+        dbName: 'sleep_tips',
+        image: widget.image);
   }
 }

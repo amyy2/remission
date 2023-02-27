@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:remission/widgets/task_page_with_URL.dart';
 
 class ProblemSolvingPage extends StatefulWidget {
-  const ProblemSolvingPage({super.key});
+  final String image;
+  ProblemSolvingPage({required this.image});
 
   @override
   State<ProblemSolvingPage> createState() => _ProblemSolvingState();
@@ -16,6 +17,7 @@ class _ProblemSolvingState extends State<ProblemSolvingPage> {
         title: 'Problem solving',
         description: 'Complete the exercise below.',
         URLname: 'Exercise',
-        dbName: 'problem_solving');
+        dbName: 'problem_solving',
+        image: widget.image);
   }
 }

@@ -79,6 +79,7 @@ class _SettingsPageState extends State<SettingsPage> {
               },
               child: const Text(
                 'Edit profile',
+                style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -102,6 +103,7 @@ class _SettingsPageState extends State<SettingsPage> {
               },
               child: const Text(
                 'Change email',
+                style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -125,6 +127,7 @@ class _SettingsPageState extends State<SettingsPage> {
               },
               child: const Text(
                 'Change password',
+                style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -142,6 +145,7 @@ class _SettingsPageState extends State<SettingsPage> {
               },
               child: const Text(
                 'Send verification email',
+                style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -167,8 +171,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         context
                             .read<FirebaseAuthMethods>()
                             .deleteAccount(context),
-                        Navigator.pop(context, 'OK'),
                         context.read<FirebaseAuthMethods>().signOut(context),
+                        Navigator.pop(context, 'OK'),
                         Navigator.of(context, rootNavigator: true)
                             .pushAndRemoveUntil(
                           MaterialPageRoute(
@@ -186,6 +190,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               child: const Text(
                 'Delete account',
+                style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),

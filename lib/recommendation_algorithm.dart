@@ -60,8 +60,10 @@ Future<List<String>> recommendationAlgorithm(
     map[taskNames[i]] = weights[i];
   }
 
-  List<String> recoommendation =
+  print(map);
+
+  List<String> recommendation =
       randomMultipleWeightedChoice<String>(map, 2, null).toList();
-  updateUnlocked(recoommendation);
-  return recoommendation;
+  updateUnlocked(recommendation);
+  return recommendation;
 }

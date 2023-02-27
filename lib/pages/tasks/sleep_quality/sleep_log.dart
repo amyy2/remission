@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../widgets/task_page_with_URL.dart';
 
 class SleepLogPage extends StatefulWidget {
-  const SleepLogPage({super.key});
+  final String image;
+  SleepLogPage({required this.image});
 
   @override
   State<SleepLogPage> createState() => _SleepLogState();
@@ -17,6 +18,7 @@ class _SleepLogState extends State<SleepLogPage> {
         description:
             'Create a sleep log for the next 7 days.  Here is an example to print or download:',
         URLname: 'Sleep log example',
-        dbName: 'sleep_log');
+        dbName: 'sleep_log',
+        image: widget.image);
   }
 }

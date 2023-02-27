@@ -7,6 +7,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:remission/pages/home/check-in.dart';
 import 'package:remission/pages/home/home.dart';
 import 'package:remission/pages/home/recommendations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import '../../colors.dart';
 import '../../recommendation_algorithm.dart';
@@ -66,7 +68,8 @@ class _WordButtonState extends State<WordButton> {
 }
 
 class WordsPage extends StatefulWidget {
-  const WordsPage({super.key});
+  final String feeling;
+  const WordsPage({Key? key, required this.feeling}) : super(key: key);
 
   @override
   State<WordsPage> createState() => _WordsPageState();
@@ -75,6 +78,28 @@ class WordsPage extends StatefulWidget {
 var _pressed = [];
 
 class _WordsPageState extends State<WordsPage> {
+  List unlocked = [];
+
+  Future getUnlocked() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        setState(() {
+          unlocked = snapshot.data()!['unlocked_tasks'];
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    getUnlocked();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,15 +107,7 @@ class _WordsPageState extends State<WordsPage> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const CheckInPage(),
-                transitionDuration: Duration.zero,
-                reverseTransitionDuration: Duration.zero,
-              ),
-            );
+            Navigator.of(context).pop();
           },
           child: Container(
             margin: const EdgeInsets.only(left: 20, top: 20),
@@ -209,7 +226,7 @@ class _WordsPageState extends State<WordsPage> {
             child: TextButton(
               onPressed: () async {
                 List tasks = await recommendationAlgorithm(
-                    FirebaseFirestore.instance, 'tasks', _pressed, []);
+                    FirebaseFirestore.instance, 'tasks', _pressed, unlocked);
                 setState(() {});
                 if (_pressed.length >= 1) {
                   Navigator.push(
@@ -217,7 +234,9 @@ class _WordsPageState extends State<WordsPage> {
                       PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
-                                  RecommendationsPage(recommendedTasks: tasks),
+                                  RecommendationsPage(
+                                      feeling: widget.feeling,
+                                      recommendedTasks: tasks),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
                             const begin = Offset(1.0, 0.0);

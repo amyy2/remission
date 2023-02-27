@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../widgets/task_page_with_URL.dart';
 
 class GratitudePage extends StatefulWidget {
-  const GratitudePage({super.key});
+  final String image;
+  GratitudePage({required this.image});
 
   @override
   State<GratitudePage> createState() => _GratitudeState();
@@ -16,6 +17,7 @@ class _GratitudeState extends State<GratitudePage> {
         title: 'Gratitude',
         description: 'Complete the exercise below.',
         URLname: 'Exercise',
-        dbName: 'gratitude');
+        dbName: 'gratitude',
+        image: widget.image);
   }
 }

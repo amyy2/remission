@@ -89,601 +89,614 @@ class _SignUp2State extends State<SignUp2> {
 
     return Scaffold(
       body: Container(
+        height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('images/background.jpg'), fit: BoxFit.cover)),
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                width: double.infinity,
-                child: Row(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) =>
+                                      const SignUp1(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),
+                          );
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 20, top: 20),
+                          child: const Icon(
+                            (Icons.arrow_back),
+                            size: 30,
+                            color: MyColors.orange,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 75, right: 50),
+                          alignment: Alignment.center,
+                          child: const Image(
+                              image: AssetImage('images/remission-logo.png'),
+                              width: 150),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 20, bottom: 20),
+                  child: const Text(
+                    'Almost there',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins',
+                        fontSize: 18,
+                        color: MyColors.darkBlue),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 20),
+                  child: const Text(
+                    'Finish setting up your account',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 14,
+                        color: MyColors.darkBlue),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: SizedBox(
+                    width: 380,
+                    height: 50,
+                    child: DropdownButtonFormField2(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color.fromARGB(124, 255, 255, 255),
+                        isDense: true,
+                        contentPadding: EdgeInsets.zero,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      isExpanded: true,
+                      hint: const Text(
+                        'Physical limitations',
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: MyColors.darkBlue,
+                            fontSize: 18),
+                      ),
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.black45,
+                      ),
+                      iconSize: 30,
+                      buttonHeight: 60,
+                      buttonPadding: const EdgeInsets.only(left: 0, right: 10),
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      items: _physical_limitations
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                      fontFamily: 'Poppins',
+                                      color: MyColors.darkBlue,
+                                      fontSize: 18),
+                                ),
+                              ))
+                          .toList(),
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Please select a physical state';
+                        }
+                      },
+                      onChanged: (value) {
+                        currPLValue = value.toString();
+                      },
+                      onSaved: (value) {
+                        currPLValue = value.toString();
+                      },
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 20),
+                  child: SizedBox(
+                    width: 380,
+                    height: 50,
+                    child: DropdownButtonFormField2(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color.fromARGB(124, 255, 255, 255),
+                        isDense: true,
+                        contentPadding: EdgeInsets.zero,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      isExpanded: true,
+                      hint: const Text(
+                        'Current diet',
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: MyColors.darkBlue,
+                            fontSize: 18),
+                      ),
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.black45,
+                      ),
+                      iconSize: 30,
+                      buttonHeight: 60,
+                      buttonPadding: const EdgeInsets.only(left: 0, right: 10),
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      items: _diet
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                      fontFamily: 'Poppins',
+                                      color: MyColors.darkBlue,
+                                      fontSize: 18),
+                                ),
+                              ))
+                          .toList(),
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Please select a diet state';
+                        }
+                      },
+                      onChanged: (value) {
+                        currDValue = value.toString();
+                      },
+                      onSaved: (value) {
+                        currDValue = value.toString();
+                      },
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(
+                      top: 10, bottom: 15, left: 20, right: 20),
+                  child: const Text(
+                    'Please select your dietary habits',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins',
+                        fontSize: 18,
+                        color: MyColors.darkBlue),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: () {
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15, right: 5),
+                      child: const Text(
+                        'Stress eating',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            color: MyColors.darkBlue),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15),
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Checkbox(
+                          checkColor: Colors.white,
+                          shape: const CircleBorder(),
+                          fillColor:
+                              MaterialStateProperty.resolveWith(getColor),
+                          value: stressChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              stressChecked = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin:
+                          const EdgeInsets.only(bottom: 15, left: 20, right: 5),
+                      child: const Text(
+                        'Sugar addiction',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            color: MyColors.darkBlue),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15),
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Checkbox(
+                          checkColor: Colors.white,
+                          shape: const CircleBorder(),
+                          fillColor:
+                              MaterialStateProperty.resolveWith(getColor),
+                          value: sugarChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              sugarChecked = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15, right: 5),
+                      child: const Text(
+                        'Emotional eating',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            color: MyColors.darkBlue),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15),
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Checkbox(
+                          checkColor: Colors.white,
+                          shape: const CircleBorder(),
+                          fillColor:
+                              MaterialStateProperty.resolveWith(getColor),
+                          value: emotionChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              emotionChecked = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin:
+                          const EdgeInsets.only(bottom: 15, left: 20, right: 5),
+                      child: const Text(
+                        'Boredom eating',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            color: MyColors.darkBlue),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15),
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Checkbox(
+                          checkColor: Colors.white,
+                          shape: const CircleBorder(),
+                          fillColor:
+                              MaterialStateProperty.resolveWith(getColor),
+                          value: boredomChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              boredomChecked = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15, right: 5),
+                      child: const Text(
+                        'Salt cravings',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            color: MyColors.darkBlue),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15),
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Checkbox(
+                          checkColor: Colors.white,
+                          shape: const CircleBorder(),
+                          fillColor:
+                              MaterialStateProperty.resolveWith(getColor),
+                          value: saltChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              saltChecked = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin:
+                          const EdgeInsets.only(bottom: 15, left: 20, right: 5),
+                      child: const Text(
+                        'Junk food cravings',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            color: MyColors.darkBlue),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15),
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Checkbox(
+                          checkColor: Colors.white,
+                          shape: const CircleBorder(),
+                          fillColor:
+                              MaterialStateProperty.resolveWith(getColor),
+                          value: junkChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              junkChecked = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15, right: 5),
+                      child: const Text(
+                        'Late night snacking',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            color: MyColors.darkBlue),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15),
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Checkbox(
+                          checkColor: Colors.white,
+                          shape: const CircleBorder(),
+                          fillColor:
+                              MaterialStateProperty.resolveWith(getColor),
+                          value: lateChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              lateChecked = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin:
+                          const EdgeInsets.only(bottom: 15, left: 20, right: 5),
+                      child: const Text(
+                        'Mindless eating',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            color: MyColors.darkBlue),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15),
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Checkbox(
+                          checkColor: Colors.white,
+                          shape: const CircleBorder(),
+                          fillColor:
+                              MaterialStateProperty.resolveWith(getColor),
+                          value: mindlessChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              mindlessChecked = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15, right: 5),
+                      child: const Text(
+                        'Eating to accomodate others',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            color: MyColors.darkBlue),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15),
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Checkbox(
+                          checkColor: Colors.white,
+                          shape: const CircleBorder(),
+                          fillColor:
+                              MaterialStateProperty.resolveWith(getColor),
+                          value: othersChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              othersChecked = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15, right: 5),
+                      child: const Text(
+                        'Eating whatever\'s easy or fast',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            color: MyColors.darkBlue),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15),
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Checkbox(
+                          checkColor: Colors.white,
+                          shape: const CircleBorder(),
+                          fillColor:
+                              MaterialStateProperty.resolveWith(getColor),
+                          value: easyChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              easyChecked = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15, right: 5),
+                      child: const Text(
+                        'Never satisfied',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            color: MyColors.darkBlue),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15),
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Checkbox(
+                          checkColor: Colors.white,
+                          shape: const CircleBorder(),
+                          fillColor:
+                              MaterialStateProperty.resolveWith(getColor),
+                          value: satisfiedChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              satisfiedChecked = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20, left: 20, right: 20, bottom: 20),
+                  child: SizedBox(
+                    width: 300,
+                    height: 50,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        addUserDetails();
                         Navigator.push(
                           context,
                           PageRouteBuilder(
                             pageBuilder:
                                 (context, animation, secondaryAnimation) =>
-                                    const SignUp1(),
+                                    const MainPage(),
                             transitionDuration: Duration.zero,
                             reverseTransitionDuration: Duration.zero,
                           ),
                         );
                       },
-                      child: Container(
-                        margin: const EdgeInsets.only(left: 20, top: 20),
-                        child: const Icon(
-                          (Icons.arrow_back),
-                          size: 30,
-                          color: MyColors.orange,
-                        ),
+                      style: OutlinedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              side: const BorderSide(
+                                  width: 0, style: BorderStyle.solid),
+                              borderRadius: BorderRadius.circular(50))),
+                      child: const Text(
+                        'Get started',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            color: MyColors.orange),
                       ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.only(top: 75, right: 50),
-                        alignment: Alignment.center,
-                        child: const Image(
-                            image: AssetImage('images/remission-logo.png'),
-                            width: 150),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 20, bottom: 20),
-                child: const Text(
-                  'Almost there',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Poppins',
-                      fontSize: 18,
-                      color: MyColors.darkBlue),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(bottom: 20),
-                child: const Text(
-                  'Finish setting up your account',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 14,
-                      color: MyColors.darkBlue),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: SizedBox(
-                  width: 380,
-                  height: 50,
-                  child: DropdownButtonFormField2(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: const Color.fromARGB(124, 255, 255, 255),
-                      isDense: true,
-                      contentPadding: EdgeInsets.zero,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    isExpanded: true,
-                    hint: const Text(
-                      'Physical limitations',
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          color: MyColors.darkBlue,
-                          fontSize: 18),
-                    ),
-                    icon: const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.black45,
-                    ),
-                    iconSize: 30,
-                    buttonHeight: 60,
-                    buttonPadding: const EdgeInsets.only(left: 0, right: 10),
-                    dropdownDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    items: _physical_limitations
-                        .map((item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                    fontFamily: 'Poppins',
-                                    color: MyColors.darkBlue,
-                                    fontSize: 18),
-                              ),
-                            ))
-                        .toList(),
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Please select a physical state';
-                      }
-                    },
-                    onChanged: (value) {
-                      currPLValue = value.toString();
-                    },
-                    onSaved: (value) {
-                      currPLValue = value.toString();
-                    },
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 20),
-                child: SizedBox(
-                  width: 380,
-                  height: 50,
-                  child: DropdownButtonFormField2(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: const Color.fromARGB(124, 255, 255, 255),
-                      isDense: true,
-                      contentPadding: EdgeInsets.zero,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    isExpanded: true,
-                    hint: const Text(
-                      'Current diet',
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          color: MyColors.darkBlue,
-                          fontSize: 18),
-                    ),
-                    icon: const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.black45,
-                    ),
-                    iconSize: 30,
-                    buttonHeight: 60,
-                    buttonPadding: const EdgeInsets.only(left: 0, right: 10),
-                    dropdownDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    items: _diet
-                        .map((item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                    fontFamily: 'Poppins',
-                                    color: MyColors.darkBlue,
-                                    fontSize: 18),
-                              ),
-                            ))
-                        .toList(),
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Please select a diet state';
-                      }
-                    },
-                    onChanged: (value) {
-                      currDValue = value.toString();
-                    },
-                    onSaved: (value) {
-                      currDValue = value.toString();
-                    },
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(
-                    top: 10, bottom: 15, left: 20, right: 20),
-                child: const Text(
-                  'Please select your dietary habits',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Poppins',
-                      fontSize: 18,
-                      color: MyColors.darkBlue),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15, right: 5),
-                    child: const Text(
-                      'Stress eating',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                          color: MyColors.darkBlue),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: Checkbox(
-                        checkColor: Colors.white,
-                        shape: const CircleBorder(),
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: stressChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            stressChecked = value!;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin:
-                        const EdgeInsets.only(bottom: 15, left: 20, right: 5),
-                    child: const Text(
-                      'Sugar addiction',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                          color: MyColors.darkBlue),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: Checkbox(
-                        checkColor: Colors.white,
-                        shape: const CircleBorder(),
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: sugarChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            sugarChecked = value!;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15, right: 5),
-                    child: const Text(
-                      'Emotional eating',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                          color: MyColors.darkBlue),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: Checkbox(
-                        checkColor: Colors.white,
-                        shape: const CircleBorder(),
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: emotionChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            emotionChecked = value!;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin:
-                        const EdgeInsets.only(bottom: 15, left: 20, right: 5),
-                    child: const Text(
-                      'Boredom eating',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                          color: MyColors.darkBlue),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: Checkbox(
-                        checkColor: Colors.white,
-                        shape: const CircleBorder(),
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: boredomChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            boredomChecked = value!;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15, right: 5),
-                    child: const Text(
-                      'Salt cravings',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                          color: MyColors.darkBlue),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: Checkbox(
-                        checkColor: Colors.white,
-                        shape: const CircleBorder(),
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: saltChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            saltChecked = value!;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin:
-                        const EdgeInsets.only(bottom: 15, left: 20, right: 5),
-                    child: const Text(
-                      'Junk food cravings',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                          color: MyColors.darkBlue),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: Checkbox(
-                        checkColor: Colors.white,
-                        shape: const CircleBorder(),
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: junkChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            junkChecked = value!;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15, right: 5),
-                    child: const Text(
-                      'Late night snacking',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                          color: MyColors.darkBlue),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: Checkbox(
-                        checkColor: Colors.white,
-                        shape: const CircleBorder(),
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: lateChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            lateChecked = value!;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin:
-                        const EdgeInsets.only(bottom: 15, left: 20, right: 5),
-                    child: const Text(
-                      'Mindless eating',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                          color: MyColors.darkBlue),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: Checkbox(
-                        checkColor: Colors.white,
-                        shape: const CircleBorder(),
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: mindlessChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            mindlessChecked = value!;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15, right: 5),
-                    child: const Text(
-                      'Eating to accomodate others',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                          color: MyColors.darkBlue),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: Checkbox(
-                        checkColor: Colors.white,
-                        shape: const CircleBorder(),
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: othersChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            othersChecked = value!;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15, right: 5),
-                    child: const Text(
-                      'Eating whatever\'s easy or fast',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                          color: MyColors.darkBlue),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: Checkbox(
-                        checkColor: Colors.white,
-                        shape: const CircleBorder(),
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: easyChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            easyChecked = value!;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15, right: 5),
-                    child: const Text(
-                      'Never satisfied',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                          color: MyColors.darkBlue),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: Checkbox(
-                        checkColor: Colors.white,
-                        shape: const CircleBorder(),
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: satisfiedChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            satisfiedChecked = value!;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 20, left: 20, right: 20, bottom: 20),
-                child: SizedBox(
-                  width: 300,
-                  height: 50,
-                  child: OutlinedButton(
-                    onPressed: () {
-                      addUserDetails();
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  const MainPage(),
-                          transitionDuration: Duration.zero,
-                          reverseTransitionDuration: Duration.zero,
-                        ),
-                      );
-                    },
-                    style: OutlinedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                                width: 0, style: BorderStyle.solid),
-                            borderRadius: BorderRadius.circular(50))),
-                    child: const Text(
-                      'Get started',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                          color: MyColors.orange),
                     ),
                   ),
                 ),
-              ),
-              /*
+                /*
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -703,7 +716,8 @@ class _SignUp2State extends State<SignUp2> {
                 ),
               ),
               */
-            ],
+              ],
+            ),
           ),
         ),
       ),

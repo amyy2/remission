@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../widgets/task_page_with_URL.dart';
 
 class GuidedMeditation1Page extends StatefulWidget {
-  const GuidedMeditation1Page({super.key});
+  final String image;
+  GuidedMeditation1Page({required this.image});
 
   @override
   State<GuidedMeditation1Page> createState() => _GuidedMeditation1State();
@@ -17,6 +18,7 @@ class _GuidedMeditation1State extends State<GuidedMeditation1Page> {
         title: 'Guided meditation I',
         description: 'Do this guided meditation before bed.',
         URLname: 'Meditation',
-        dbName: 'guided_meditation_1');
+        dbName: 'guided_meditation_1',
+        image: widget.image);
   }
 }

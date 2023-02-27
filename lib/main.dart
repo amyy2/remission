@@ -6,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:remission/colors.dart';
 import 'package:remission/pages/main_page.dart';
+import 'package:remission/pages/tasks/nutrition/choose_cff.dart';
+import 'package:remission/pages/tasks/nutrition/print_cff_list.dart';
 import 'package:remission/services/firebase_auth_methods.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
                 ColorScheme.fromSwatch().copyWith(primary: MyColors.darkBlue),
             textTheme: Theme.of(context)
                 .textTheme
-                .apply(fontSizeFactor: 1.3, fontFamily: 'Poppins'),
+                .apply(fontSizeFactor: 1.0, fontFamily: 'Poppins'),
           ),
           routes: {
             '/main-page': (context) => const MainPage(),
