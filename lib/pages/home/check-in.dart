@@ -15,22 +15,23 @@ import 'package:firebase_core/firebase_core.dart';
 
 import '../../colors.dart';
 
+export '../home/check-in.dart';
+
 class CheckInPage extends StatefulWidget {
   const CheckInPage({super.key});
 
   static const title = 'Home';
+  static String mood = '';
+  static String icon = '';
+  static var angryColor = Colors.black;
+  static var sadColor = Colors.black;
+  static var mehColor = Colors.black;
+  static var goodColor = Colors.black;
+  static var greatColor = Colors.black;
 
   @override
   State<CheckInPage> createState() => _CheckInPageState();
 }
-
-String _mood = '';
-String _icon = '';
-var _angry_color = Colors.black;
-var _sad_color = Colors.black;
-var _meh_color = Colors.black;
-var _good_color = Colors.black;
-var _great_color = Colors.black;
 
 class _CheckInPageState extends State<CheckInPage> {
   double opacity = 0.0;
@@ -52,15 +53,7 @@ class _CheckInPageState extends State<CheckInPage> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const HomePage(),
-                transitionDuration: Duration.zero,
-                reverseTransitionDuration: Duration.zero,
-              ),
-            );
+            Navigator.pop(context);
           },
           child: Container(
             margin: const EdgeInsets.only(left: 20, top: 20),
@@ -135,20 +128,20 @@ class _CheckInPageState extends State<CheckInPage> {
                         IconButton(
                             onPressed: () {
                               setState(() {
-                                _mood = 'angry';
-                                _icon = 'faceAngry';
-                                _angry_color = MyColors.mediumBlue;
-                                _sad_color = Colors.black;
-                                _meh_color = Colors.black;
-                                _good_color = Colors.black;
-                                _great_color = Colors.black;
+                                CheckInPage.mood = 'angry';
+                                CheckInPage.icon = 'faceAngry';
+                                CheckInPage.angryColor = MyColors.mediumBlue;
+                                CheckInPage.sadColor = Colors.black;
+                                CheckInPage.mehColor = Colors.black;
+                                CheckInPage.goodColor = Colors.black;
+                                CheckInPage.greatColor = Colors.black;
                               });
                               Navigator.push(
                                 context,
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      WordsPage(feeling: _mood),
+                                      WordsPage(feeling: CheckInPage.mood),
                                   transitionDuration: Duration.zero,
                                   reverseTransitionDuration: Duration.zero,
                                 ),
@@ -158,25 +151,25 @@ class _CheckInPageState extends State<CheckInPage> {
                             icon: FaIcon(
                               FontAwesomeIcons.faceAngry,
                               size: 45,
-                              color: _angry_color,
+                              color: CheckInPage.angryColor,
                             )),
                         IconButton(
                             onPressed: () {
                               setState(() {
-                                _mood = 'sad';
-                                _icon = 'faceSadTear';
-                                _angry_color = Colors.black;
-                                _sad_color = MyColors.mediumBlue;
-                                _meh_color = Colors.black;
-                                _good_color = Colors.black;
-                                _great_color = Colors.black;
+                                CheckInPage.mood = 'sad';
+                                CheckInPage.icon = 'faceSadTear';
+                                CheckInPage.angryColor = Colors.black;
+                                CheckInPage.sadColor = MyColors.mediumBlue;
+                                CheckInPage.mehColor = Colors.black;
+                                CheckInPage.goodColor = Colors.black;
+                                CheckInPage.greatColor = Colors.black;
                               });
                               Navigator.push(
                                 context,
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      WordsPage(feeling: _mood),
+                                      WordsPage(feeling: CheckInPage.mood),
                                   transitionDuration: Duration.zero,
                                   reverseTransitionDuration: Duration.zero,
                                 ),
@@ -186,25 +179,25 @@ class _CheckInPageState extends State<CheckInPage> {
                             icon: FaIcon(
                               FontAwesomeIcons.faceSadTear,
                               size: 45,
-                              color: _sad_color,
+                              color: CheckInPage.sadColor,
                             )),
                         IconButton(
                             onPressed: () {
                               setState(() {
-                                _mood = 'meh';
-                                _icon = 'faceMeh';
-                                _angry_color = Colors.black;
-                                _sad_color = Colors.black;
-                                _meh_color = MyColors.mediumBlue;
-                                _good_color = Colors.black;
-                                _great_color = Colors.black;
+                                CheckInPage.mood = 'meh';
+                                CheckInPage.icon = 'faceMeh';
+                                CheckInPage.angryColor = Colors.black;
+                                CheckInPage.sadColor = Colors.black;
+                                CheckInPage.mehColor = MyColors.mediumBlue;
+                                CheckInPage.goodColor = Colors.black;
+                                CheckInPage.greatColor = Colors.black;
                               });
                               Navigator.push(
                                 context,
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      WordsPage(feeling: _mood),
+                                      WordsPage(feeling: CheckInPage.mood),
                                   transitionDuration: Duration.zero,
                                   reverseTransitionDuration: Duration.zero,
                                 ),
@@ -214,25 +207,25 @@ class _CheckInPageState extends State<CheckInPage> {
                             icon: FaIcon(
                               FontAwesomeIcons.faceMeh,
                               size: 45,
-                              color: _meh_color,
+                              color: CheckInPage.mehColor,
                             )),
                         IconButton(
                             onPressed: () {
                               setState(() {
-                                _mood = 'good';
-                                _icon = 'faceSmile';
-                                _angry_color = Colors.black;
-                                _sad_color = Colors.black;
-                                _meh_color = Colors.black;
-                                _good_color = MyColors.mediumBlue;
-                                _great_color = Colors.black;
+                                CheckInPage.mood = 'good';
+                                CheckInPage.icon = 'faceSmile';
+                                CheckInPage.angryColor = Colors.black;
+                                CheckInPage.sadColor = Colors.black;
+                                CheckInPage.mehColor = Colors.black;
+                                CheckInPage.goodColor = MyColors.mediumBlue;
+                                CheckInPage.greatColor = Colors.black;
                               });
                               Navigator.push(
                                 context,
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      WordsPage(feeling: _mood),
+                                      WordsPage(feeling: CheckInPage.mood),
                                   transitionDuration: Duration.zero,
                                   reverseTransitionDuration: Duration.zero,
                                 ),
@@ -242,25 +235,25 @@ class _CheckInPageState extends State<CheckInPage> {
                             icon: FaIcon(
                               FontAwesomeIcons.faceSmile,
                               size: 45,
-                              color: _good_color,
+                              color: CheckInPage.goodColor,
                             )),
                         IconButton(
                           onPressed: () {
                             setState(() {
-                              _mood = 'great';
-                              _icon = 'faceGrin';
-                              _angry_color = Colors.black;
-                              _sad_color = Colors.black;
-                              _meh_color = Colors.black;
-                              _good_color = Colors.black;
-                              _great_color = MyColors.mediumBlue;
+                              CheckInPage.mood = 'great';
+                              CheckInPage.icon = 'faceGrin';
+                              CheckInPage.angryColor = Colors.black;
+                              CheckInPage.sadColor = Colors.black;
+                              CheckInPage.mehColor = Colors.black;
+                              CheckInPage.goodColor = Colors.black;
+                              CheckInPage.greatColor = MyColors.mediumBlue;
                             });
                             Navigator.push(
                               context,
                               PageRouteBuilder(
                                 pageBuilder:
                                     (context, animation, secondaryAnimation) =>
-                                        WordsPage(feeling: _icon),
+                                        WordsPage(feeling: CheckInPage.mood),
                                 transitionDuration: Duration.zero,
                                 reverseTransitionDuration: Duration.zero,
                               ),
@@ -270,7 +263,7 @@ class _CheckInPageState extends State<CheckInPage> {
                           icon: FaIcon(
                             FontAwesomeIcons.faceGrin,
                             size: 45,
-                            color: _great_color,
+                            color: CheckInPage.greatColor,
                           ),
                         ),
                       ],

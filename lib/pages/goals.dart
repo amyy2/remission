@@ -36,13 +36,13 @@ class GoalsPage extends StatefulWidget {
 
   static const title = 'Tasks';
 
+  static List goals = [];
+
   @override
   State<GoalsPage> createState() => _GoalsPageState();
 }
 
 class _GoalsPageState extends State<GoalsPage> {
-  List goals = [];
-
   Future getGoals() async {
     await FirebaseFirestore.instance
         .collection('users')
@@ -51,7 +51,7 @@ class _GoalsPageState extends State<GoalsPage> {
         .then((snapshot) async {
       if (snapshot.exists) {
         setState(() {
-          goals = snapshot.data()!['goals'];
+          GoalsPage.goals = snapshot.data()!['goals'];
         });
       }
     });
@@ -163,62 +163,72 @@ class _GoalsPageState extends State<GoalsPage> {
               child: Column(
                 children: <Widget>[
                   if (finished)
-                    for (var goal in goals)
-                      Column(
-                        children: [
-                          SizedBox(height: 30),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                      pageLinks[goal],
-                                ),
-                              );
-                            },
-                            child: Container(
-                              width: 350.0,
-                              height: 75.0,
-                              child: AspectRatio(
-                                aspectRatio: 300 / 200,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(22),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 232, 232, 232),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          '    ' + tasksMap[goal]['title'],
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black),
-                                        ),
-                                        IconButton(
-                                            onPressed: () {
-                                              removeFromGoals([goal]);
-                                              getGoals();
-                                            },
-                                            icon: FaIcon(
-                                              FontAwesomeIcons.x,
-                                              size: 20,
-                                              color: Colors.black,
-                                            ))
-                                      ],
+                    if (GoalsPage.goals.length == 0)
+                      Column(children: const [
+                        SizedBox(height: 20),
+                        Text(
+                          'Add some tasks from the explore page',
+                          style: TextStyle(fontSize: 18),
+                        )
+                      ])
+                    else
+                      for (var goal in GoalsPage.goals)
+                        Column(
+                          children: [
+                            SizedBox(height: 30),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                            secondaryAnimation) =>
+                                        pageLinks[goal],
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: 350.0,
+                                height: 75.0,
+                                child: AspectRatio(
+                                  aspectRatio: 300 / 200,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(22),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color:
+                                            Color.fromARGB(255, 232, 232, 232),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            '    ' + tasksMap[goal]['title'],
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.black),
+                                          ),
+                                          IconButton(
+                                              onPressed: () {
+                                                removeFromGoals([goal]);
+                                                getGoals();
+                                              },
+                                              icon: FaIcon(
+                                                FontAwesomeIcons.x,
+                                                size: 20,
+                                                color: Colors.black,
+                                              ))
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
                 ],
               ),
             ),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -14,6 +15,9 @@ import 'package:remission/services/firebase_auth_methods.dart';
 import 'package:provider/provider.dart';
 
 import '../../colors.dart';
+import '../explore.dart';
+import '../goals.dart';
+import '../profile/profile.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});

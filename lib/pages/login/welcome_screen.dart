@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -48,10 +50,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         password: passwordController.text,
         context: context,
       );
-      FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      StreamSubscription<User?>? listener;
+      listener = auth.authStateChanges().listen((User? user) {
         if (user != null) {
           addUserDetails(nameController.text.trim(),
               emailController.text.trim(), user.uid);
+          listener?.cancel();
         }
       });
     } else {
@@ -67,6 +72,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       'completed_tasks': [],
       'unlocked_tasks': [],
       'goals': [],
+      'points': 0,
     });
   }
 

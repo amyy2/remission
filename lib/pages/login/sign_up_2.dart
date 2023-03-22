@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -52,7 +54,9 @@ class SignUp2 extends StatefulWidget {
 
 class _SignUp2State extends State<SignUp2> {
   void addUserDetails() async {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    StreamSubscription<User?>? listener;
+    listener = auth.authStateChanges().listen((User? user) {
       if (user != null) {
         FirebaseFirestore.instance.collection('users').doc(user.uid).update({
           'physical_limitations': currPLValue,
@@ -68,7 +72,8 @@ class _SignUp2State extends State<SignUp2> {
           'accomodate_others': othersChecked,
           'easy_or_fast': easyChecked,
           'never_satisfied': satisfiedChecked
-        });
+        }).then((value) => listener?.cancel());
+        ;
       }
     });
   }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/material.dart';
 import 'package:remission/colors.dart';
@@ -20,7 +21,7 @@ class MainPage extends StatefulWidget {
 PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
 List<Widget> _buildScreens() {
-  return [HomePage(), GoalsPage(), ExplorePage(), const ProfilePage()];
+  return [HomePage(), GoalsPage(), ExplorePage(), ProfilePage()];
 }
 
 List<PersistentBottomNavBarItem> _navBarsItems() {

@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:remission/pages/login/sign_up_1.dart';
+import '../pages/home/home.dart';
 import '../pages/main_page.dart';
 import '../utilities/showSnackBar.dart';
 
@@ -42,9 +44,22 @@ class FirebaseAuthMethods {
   }) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
+
+      print(FirebaseAuth.instance.currentUser!.email);
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get()
+          .then((snapshot) async {
+        if (snapshot.exists) {
+          print(snapshot.data());
+        }
+      });
+
       if (!_auth.currentUser!.emailVerified) {
         await sendEmailVerification(context);
       }
+
       Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (BuildContext context) {

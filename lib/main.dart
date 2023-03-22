@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:remission/colors.dart';
 import 'package:remission/pages/main_page.dart';
+import 'package:remission/pages/splash.dart';
 import 'package:remission/pages/tasks/nutrition/choose_cff.dart';
 import 'package:remission/pages/tasks/nutrition/print_cff_list.dart';
 import 'package:remission/services/firebase_auth_methods.dart';
@@ -32,18 +33,19 @@ class MyApp extends StatelessWidget {
             initialData: null)
       ],
       child: MaterialApp(
-          home: const AuthWrapper(),
-          theme: ThemeData(
-            colorScheme:
-                ColorScheme.fromSwatch().copyWith(primary: MyColors.darkBlue),
-            textTheme: Theme.of(context)
-                .textTheme
-                .apply(fontSizeFactor: 1.0, fontFamily: 'Poppins'),
-          ),
-          routes: {
-            '/main-page': (context) => const MainPage(),
-            '/welcome-page': (context) => const WelcomeScreen(),
-          }),
+        home: const AuthWrapper(),
+        theme: ThemeData(
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(primary: MyColors.darkBlue),
+          textTheme: Theme.of(context)
+              .textTheme
+              .apply(fontSizeFactor: 1.0, fontFamily: 'Poppins'),
+        ),
+        routes: {
+          '/main-page': (context) => const MainPage(),
+          '/welcome-page': (context) => const WelcomeScreen(),
+        },
+      ),
     );
   }
 }
@@ -56,7 +58,7 @@ class AuthWrapper extends StatelessWidget {
     final firebaseUser = context.watch<User?>();
 
     if (firebaseUser != null) {
-      return const MainPage();
+      return const Splash();
     }
     return const WelcomeScreen();
   }

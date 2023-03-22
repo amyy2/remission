@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dart_random_choice/dart_random_choice.dart';
 import 'package:multiple_random_choice/multiple_random_choice.dart';
@@ -5,12 +7,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void updateUnlocked(List tasks) async {
-  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  StreamSubscription<User?>? listener;
+  listener = auth.authStateChanges().listen((User? user) {
     if (user != null) {
       FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
-          .update({'unlocked_tasks': FieldValue.arrayUnion(tasks)});
+          .update({'unlocked_tasks': FieldValue.arrayUnion(tasks)}).then(
+              (value) => listener?.cancel());
     }
   });
 }

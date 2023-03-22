@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -38,7 +40,9 @@ class _SignUp1State extends State<SignUp1> {
 
   void addUserDetails(String age, String height, String weight,
       String diagnosis, String dateOfDiagnosis) async {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    StreamSubscription<User?>? listener;
+    listener = auth.authStateChanges().listen((User? user) {
       if (user != null) {
         FirebaseFirestore.instance.collection('users').doc(user.uid).update({
           'age': age,
@@ -52,7 +56,7 @@ class _SignUp1State extends State<SignUp1> {
           'immunotherapy': immunoChecked,
           'hormone': hormoneChecked,
           'other': otherChecked
-        });
+        }).then((value) => listener?.cancel());
       }
     });
   }

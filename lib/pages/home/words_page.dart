@@ -13,6 +13,8 @@ import 'package:firebase_core/firebase_core.dart';
 import '../../colors.dart';
 import '../../recommendation_algorithm.dart';
 
+export '../home/words_page.dart';
+
 class WordButton extends StatefulWidget {
   final String word;
 
@@ -32,26 +34,26 @@ class _WordButtonState extends State<WordButton> {
           shape: RoundedRectangleBorder(
               side: const BorderSide(width: 0, style: BorderStyle.solid),
               borderRadius: BorderRadius.circular(50)),
-          backgroundColor: _pressed.contains(widget.word)
+          backgroundColor: WordsPage.pressed.contains(widget.word)
               ? Color.fromARGB(255, 232, 236, 252)
               : Colors.white),
       onPressed: () {
         setState(() {
-          if (_pressed.length < 3) {
+          if (WordsPage.pressed.length < 3) {
             setState(() {
               maximum_reached = false;
             });
-            if (_pressed.contains(widget.word)) {
-              _pressed.remove(widget.word);
+            if (WordsPage.pressed.contains(widget.word)) {
+              WordsPage.pressed.remove(widget.word);
             } else {
-              _pressed.add(widget.word);
+              WordsPage.pressed.add(widget.word);
             }
           } else {
             setState(() {
               maximum_reached = true;
             });
-            if (_pressed.contains(widget.word)) {
-              _pressed.remove(widget.word);
+            if (WordsPage.pressed.contains(widget.word)) {
+              WordsPage.pressed.remove(widget.word);
             }
           }
         });
@@ -60,7 +62,7 @@ class _WordButtonState extends State<WordButton> {
         widget.word,
         style: TextStyle(
             color:
-                _pressed.contains(widget.word) ? MyColors.orange : Colors.black,
+                WordsPage.pressed.contains(widget.word) ? MyColors.orange : Colors.black,
             fontSize: 20),
       ),
     );
@@ -71,11 +73,11 @@ class WordsPage extends StatefulWidget {
   final String feeling;
   const WordsPage({Key? key, required this.feeling}) : super(key: key);
 
+  static var pressed = [];
+
   @override
   State<WordsPage> createState() => _WordsPageState();
 }
-
-var _pressed = [];
 
 class _WordsPageState extends State<WordsPage> {
   List unlocked = [];
@@ -85,18 +87,21 @@ class _WordsPageState extends State<WordsPage> {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
-        .then((snapshot) async {
-      if (snapshot.exists) {
-        setState(() {
-          unlocked = snapshot.data()!['unlocked_tasks'];
-        });
-      }
-    });
+        .then(
+      (snapshot) async {
+        if (snapshot.exists) {
+          setState(
+            () {
+              unlocked = snapshot.data()!['unlocked_tasks'];
+            },
+          );
+        }
+      },
+    );
   }
 
   @override
   void initState() {
-    getUnlocked();
     super.initState();
   }
 
@@ -107,7 +112,7 @@ class _WordsPageState extends State<WordsPage> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.of(context).pop();
+            Navigator.pop(context);
           },
           child: Container(
             margin: const EdgeInsets.only(left: 20, top: 20),
@@ -133,7 +138,7 @@ class _WordsPageState extends State<WordsPage> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 10, bottom: 60),
+            padding: EdgeInsets.only(top: 10, bottom: 20),
             width: double.infinity,
             child: Text(
               "Choose up to 3",
@@ -222,13 +227,14 @@ class _WordsPageState extends State<WordsPage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 60),
+            margin: EdgeInsets.only(top: 20),
             child: TextButton(
               onPressed: () async {
+                getUnlocked();
                 List tasks = await recommendationAlgorithm(
-                    FirebaseFirestore.instance, 'tasks', _pressed, unlocked);
+                    FirebaseFirestore.instance, 'tasks', WordsPage.pressed, unlocked);
                 setState(() {});
-                if (_pressed.length >= 1) {
+                if (WordsPage.pressed.length >= 1) {
                   Navigator.push(
                       context,
                       PageRouteBuilder(

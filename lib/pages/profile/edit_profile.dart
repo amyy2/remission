@@ -77,6 +77,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void dispose() {
     nameController.dispose();
+    ageController.dispose();
+    heightController.dispose();
+    weightController.dispose();
+    diagnosisController.dispose();
+    dateOfDiagnosisController.dispose();
     super.dispose();
   }
 
@@ -977,14 +982,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.only(top: 13, left: 20, right: 20),
-              width: double.infinity,
-              child: const Text('Please restart the app to see your changes.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 15, color: Color.fromARGB(255, 100, 100, 100))),
-            ),
             const SizedBox(height: 20),
           ],
         ),
@@ -1096,43 +1093,45 @@ class _EditProfilePageState extends State<EditProfilePage> {
     });
   }
 
+  void updateUserData() async {
+    print(FirebaseAuth.instance.currentUser!.email);
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update(
+      {
+        'name': nameController.text.trim(),
+        'age': ageController.text.trim(),
+        'gender': currGValue,
+        'height': heightController.text.trim(),
+        'weight': weightController.text.trim(),
+        'diagnosis': diagnosisController.text.trim(),
+        'date_of_diagnosis': dateOfDiagnosisController.text.trim(),
+        'radiation': radiationChecked,
+        'chemo': chemoChecked,
+        'immunotherapy': immunoChecked,
+        'hormone': hormoneChecked,
+        'other': othersChecked,
+        'physical_limitations': currPLValue,
+        'diet': currDValue,
+        'stress_eating': stressChecked,
+        'sugar_addiction': sugarChecked,
+        'emotional_eating': emotionChecked,
+        'boredom_eating': boredomChecked,
+        'salt_cravings': saltChecked,
+        'junk_food_cravings': junkChecked,
+        'late_night_snacking': lateChecked,
+        'mindless_eating': mindlessChecked,
+        'accomodate_others': othersChecked,
+        'easy_or_fast': easyChecked,
+        'never_satisfied': satisfiedChecked
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
     getUserData();
-  }
-
-  void updateUserData() async {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user != null) {
-        FirebaseFirestore.instance.collection('users').doc(user.uid).update({
-          'name': nameController.text.trim(),
-          'age': ageController.text.trim(),
-          'gender': currGValue,
-          'height': heightController.text.trim(),
-          'weight': weightController.text.trim(),
-          'diagnosis': diagnosisController.text.trim(),
-          'date_of_diagnosis': dateOfDiagnosisController.text.trim(),
-          'radiation': radiationChecked,
-          'chemo': chemoChecked,
-          'immunotherapy': immunoChecked,
-          'hormone': hormoneChecked,
-          'other': othersChecked,
-          'physical_limitations': currPLValue,
-          'diet': currDValue,
-          'stress_eating': stressChecked,
-          'sugar_addiction': sugarChecked,
-          'emotional_eating': emotionChecked,
-          'boredom_eating': boredomChecked,
-          'salt_cravings': saltChecked,
-          'junk_food_cravings': junkChecked,
-          'late_night_snacking': lateChecked,
-          'mindless_eating': mindlessChecked,
-          'accomodate_others': othersChecked,
-          'easy_or_fast': easyChecked,
-          'never_satisfied': satisfiedChecked
-        });
-      }
-    });
   }
 }

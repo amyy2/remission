@@ -10,6 +10,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:remission/recommendation_algorithm.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+export '../home/recommendations.dart';
+
 class RecommendationsPage extends StatefulWidget {
   final String feeling;
   final List recommendedTasks;
@@ -17,41 +19,33 @@ class RecommendationsPage extends StatefulWidget {
       {Key? key, required this.feeling, required this.recommendedTasks})
       : super(key: key);
 
+  static String title1 = '';
+  static String description1 = '';
+  static String image1 = 'images/white.png';
+  static String title2 = '';
+  static String description2 = '';
+  static String image2 = 'images/white.png';
+
   @override
   State<RecommendationsPage> createState() => _RecommendationsPageState();
 }
 
 void addToGoals(List task) async {
-  FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    if (user != null) {
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .update({'goals': FieldValue.arrayUnion(task)});
-    }
-  });
+  FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .update({'goals': FieldValue.arrayUnion(task)});
 }
 
 void addMood(String mood, DateTime date) async {
-  FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    if (user != null) {
-      FirebaseFirestore.instance.collection('mood_history').doc().set({
-        'user_id': user.uid,
-        'mood': mood,
-        'date': date,
-      });
-    }
+  FirebaseFirestore.instance.collection('mood_history').doc().set({
+    'user_id': FirebaseAuth.instance.currentUser!.uid,
+    'mood': mood,
+    'date': date,
   });
 }
 
 class _RecommendationsPageState extends State<RecommendationsPage> {
-  String title1 = '';
-  String description1 = '';
-  String image1 = 'images/white.png';
-  String title2 = '';
-  String description2 = '';
-  String image2 = 'images/white.png';
-
   Future getData() async {
     await FirebaseFirestore.instance
         .collection('tasks')
@@ -59,9 +53,9 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
         .get()
         .then((snapshot) async {
       setState(() {
-        title1 = snapshot.docs[0]["title"];
-        description1 = snapshot.docs[0]["description"];
-        image1 = snapshot.docs[0]["image"];
+        RecommendationsPage.title1 = snapshot.docs[0]["title"];
+        RecommendationsPage.description1 = snapshot.docs[0]["description"];
+        RecommendationsPage.image1 = snapshot.docs[0]["image"];
       });
     });
     await FirebaseFirestore.instance
@@ -70,9 +64,9 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
         .get()
         .then((snapshot) async {
       setState(() {
-        title2 = snapshot.docs[0]["title"];
-        description2 = snapshot.docs[0]["description"];
-        image2 = snapshot.docs[0]["image"];
+        RecommendationsPage.title2 = snapshot.docs[0]["title"];
+        RecommendationsPage.description2 = snapshot.docs[0]["description"];
+        RecommendationsPage.image2 = snapshot.docs[0]["image"];
       });
     });
   }
@@ -92,6 +86,11 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () {
+            null;
+          },
+        ),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
@@ -101,7 +100,7 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
             padding: EdgeInsets.only(top: 10, left: 10, right: 10),
             width: double.infinity,
             child: Text(
-              "Based on how you\'re feeling, here are some tasks to choose from:",
+              "Here are some recommended tasks, based on how you're feeling today",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 25),
             ),
@@ -122,18 +121,18 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
                         alignment: FractionalOffset.center,
                         colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.5), BlendMode.dstATop),
-                        image: AssetImage(image1),
+                        image: AssetImage(RecommendationsPage.image1),
                       )),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        title1,
+                        RecommendationsPage.title1,
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 25, color: Colors.white),
                       ),
                       Text(
-                        description1,
+                        RecommendationsPage.description1,
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
@@ -189,18 +188,18 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
                         alignment: FractionalOffset.center,
                         colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.5), BlendMode.dstATop),
-                        image: AssetImage(image2),
+                        image: AssetImage(RecommendationsPage.image2),
                       )),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        title2,
+                        RecommendationsPage.title2,
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 25, color: Colors.white),
                       ),
                       Text(
-                        description2,
+                        RecommendationsPage.description2,
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
@@ -244,7 +243,7 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
           Container(
             width: 400,
             child: Text(
-                'You can also add these tasks to your goals later from the explore page',
+                'Want to complete these tasks later? Add them to your goals on the Explore Page',
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 18)),
           ),
