@@ -122,7 +122,6 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future getUnlocked() async {
-    print(FirebaseAuth.instance.currentUser!.email);
     await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -132,8 +131,41 @@ class _ProfilePageState extends State<ProfilePage> {
         setState(() {
           ExplorePage.unlocked = snapshot.data()!['unlocked_tasks'];
         });
-        print(ExplorePage.unlocked);
       }
+    });
+  }
+
+  num streak = 0;
+
+  Future getStreak() async {
+    await FirebaseFirestore.instance
+        .collection('mood_history')
+        .where("user_id", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((snapshot) async {
+      setState(
+        () {
+          moods = snapshot.docs;
+          List<DateTime> dates = [];
+          for (var i = 0; i < moods.length; i++) {
+            dates.add(moods[i].data()['date'].toDate());
+          }
+          dates.sort((b, a) => a.compareTo(b));
+          // if latest entry is within the past 24 hours
+          if (DateTime.now().difference(dates[0]) < Duration(hours: 24)) {
+            streak = 1;
+            for (var i = 1; i < dates.length; i++) {
+              if (dates[i].difference(dates[i - 1]) < Duration(days: 2)) {
+                setState(() {
+                  streak += 1;
+                });
+              } else {
+                break;
+              }
+            }
+          }
+        },
+      );
     });
   }
 
@@ -144,6 +176,7 @@ class _ProfilePageState extends State<ProfilePage> {
     getCompleted();
     getPoints();
     getUnlocked();
+    getStreak();
     super.initState();
   }
 
@@ -152,6 +185,8 @@ class _ProfilePageState extends State<ProfilePage> {
     getName();
     getCompleted();
     getPoints();
+    streak = 0;
+    getStreak();
   }
 
   Future<void> _signOut() async {
@@ -280,14 +315,20 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(top: 40, bottom: 5),
-                  width: double.infinity,
-                  child: Text(
-                    "Summary",
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
+                    padding: const EdgeInsets.only(top: 40, bottom: 5),
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FaIcon(FontAwesomeIcons.fire,
+                            color: Colors.orange, size: 22),
+                        Text(
+                          "  Current streak: ${streak} days",
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    )),
                 TableCalendar(
                   headerStyle: HeaderStyle(
                     formatButtonVisible: false,

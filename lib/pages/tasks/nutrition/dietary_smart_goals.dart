@@ -16,7 +16,7 @@ class _DietarySMARTGoalsState extends State<DietarySMARTGoalsPage> {
         URL: 'https://www.ownyourcancercoaching.com/Dietarysmartgoals-dietary',
         title: 'SMART goals',
         description: 'Complete the exercise below.',
-        URLname: 'Exercise',
+        URLname: 'Click here',
         dbName: 'dietary_smart_goals',
         image: widget.image);
   }

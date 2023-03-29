@@ -16,7 +16,7 @@ class _FoodJournalState extends State<FoodJournalPage> {
         URL: 'https://www.ownyourcancercoaching.com/exercise',
         title: 'Food journal',
         description: 'Complete the exercise below.',
-        URLname: 'Exercise',
+        URLname: 'Click here',
         dbName: 'food_journal',
         image: widget.image);
   }

@@ -17,7 +17,7 @@ class _JournalingState extends State<JournalingPage> {
         title: 'Journaling',
         description:
             'Journaling right before bed has been proven to help to calm your mind and avoid having you wake up in the middle of the night, worrying about everything you need to do the next day.  Complete the following exercise:',
-        URLname: 'Exercise',
+        URLname: 'Click here',
         dbName: 'journaling',
         image: widget.image);
   }

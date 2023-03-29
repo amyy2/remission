@@ -16,7 +16,7 @@ class _ProblemSolvingState extends State<ProblemSolvingPage> {
         URL: 'https://www.ownyourcancercoaching.com/problemsolving',
         title: 'Problem solving',
         description: 'Complete the exercise below.',
-        URLname: 'Exercise',
+        URLname: 'Click here',
         dbName: 'problem_solving',
         image: widget.image);
   }

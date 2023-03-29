@@ -18,7 +18,7 @@ class _ActionPlanState extends State<ActionPlanPage> {
         title: 'Action plan',
         description:
             'Make an action plan for the next 7 days that will move you closer to achieving your SMART goals.  Grab a pen and paper and break down your goal into small realistic and achievable steps that you can do each day this week. Just make sure that they\'re steps that you are likely to do. Even if the steps are small (like walking to the end of the street and back) it\'s still progress towards achieving your goal.  If you\'re feeling ambitious, aim to do one of the following YouTube videos each day:',
-        URLname: 'YouTube videos',
+        URLname: 'Click here for YouTube videos',
         dbName: 'action_plan',
         image: widget.image);
   }

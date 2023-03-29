@@ -18,7 +18,7 @@ class _PhysicalSMARTGoalsState extends State<PhysicalSMARTGoalsPage> {
         title: 'SMART goals',
         description:
             'What is your main goal in terms of physical activity? (ie., to get in shape, to be more active, to have more motivation to exercise, etc) Complete the following exercise.',
-        URLname: 'Exercise',
+        URLname: 'Click here',
         dbName: 'physical_smart_goals',
         image: widget.image);
   }

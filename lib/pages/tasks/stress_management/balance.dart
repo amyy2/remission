@@ -16,7 +16,7 @@ class _BalanceState extends State<BalancePage> {
         URL: 'https://www.ownyourcancercoaching.com/balance-exercise',
         title: 'Balance',
         description: 'Complete the exercise below.',
-        URLname: 'Exercise',
+        URLname: 'Click here',
         dbName: 'balance',
         image: widget.image);
   }

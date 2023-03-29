@@ -16,7 +16,7 @@ class _SleepTipsState extends State<SleepTipsPage> {
         URL: 'https://www.ownyourcancercoaching.com/sleeptips',
         title: 'Sleep tips',
         description: 'Complete the exercise below.',
-        URLname: 'Exercise',
+        URLname: 'Click here',
         dbName: 'sleep_tips',
         image: widget.image);
   }

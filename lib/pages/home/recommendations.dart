@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:remission/colors.dart';
 import 'package:remission/pages/home/home.dart';
+import 'package:remission/pages/explore.dart';
 import 'package:remission/pages/home/recommendations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:remission/recommendation_algorithm.dart';
@@ -68,6 +69,22 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
         RecommendationsPage.description2 = snapshot.docs[0]["description"];
         RecommendationsPage.image2 = snapshot.docs[0]["image"];
       });
+    });
+  }
+
+  List goals = [];
+
+  Future getGoals() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        setState(() {
+          goals = snapshot.data()!['goals'];
+        });
+      }
     });
   }
 
@@ -145,7 +162,16 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
                           height: 50,
                           child: OutlinedButton(
                             onPressed: () {
-                              addToGoals([widget.recommendedTasks[0]]);
+                              goals.contains(widget.recommendedTasks[0])
+                                  ? {
+                                      removeFromGoals(
+                                          [widget.recommendedTasks[0]]),
+                                      getGoals()
+                                    }
+                                  : {
+                                      addToGoals([widget.recommendedTasks[0]]),
+                                      getGoals()
+                                    };
                             },
                             style: OutlinedButton.styleFrom(
                                 backgroundColor:
@@ -154,15 +180,25 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
                                     side: const BorderSide(
                                         width: 0, style: BorderStyle.solid),
                                     borderRadius: BorderRadius.circular(50))),
-                            child: const Text(
-                              'Add task to goals',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Poppins',
-                                  fontSize: 18,
-                                  color: MyColors.orange),
-                            ),
+                            child: goals.contains(widget.recommendedTasks[0])
+                                ? Text(
+                                    'Remove task from goals',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Poppins',
+                                        fontSize: 18,
+                                        color: MyColors.orange),
+                                  )
+                                : Text(
+                                    'Add task to goals',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Poppins',
+                                        fontSize: 18,
+                                        color: MyColors.orange),
+                                  ),
                           ),
                         ),
                       ),
@@ -212,7 +248,16 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
                           height: 50,
                           child: OutlinedButton(
                             onPressed: () {
-                              addToGoals([widget.recommendedTasks[1]]);
+                              goals.contains(widget.recommendedTasks[1])
+                                  ? {
+                                      removeFromGoals(
+                                          [widget.recommendedTasks[1]]),
+                                      getGoals()
+                                    }
+                                  : {
+                                      addToGoals([widget.recommendedTasks[1]]),
+                                      getGoals()
+                                    };
                             },
                             style: OutlinedButton.styleFrom(
                                 backgroundColor:
@@ -221,15 +266,25 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
                                     side: const BorderSide(
                                         width: 0, style: BorderStyle.solid),
                                     borderRadius: BorderRadius.circular(50))),
-                            child: const Text(
-                              'Add task to goals',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Poppins',
-                                  fontSize: 18,
-                                  color: MyColors.orange),
-                            ),
+                            child: goals.contains(widget.recommendedTasks[1])
+                                ? Text(
+                                    'Remove task from goals',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Poppins',
+                                        fontSize: 18,
+                                        color: MyColors.orange),
+                                  )
+                                : Text(
+                                    'Add task to goals',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Poppins',
+                                        fontSize: 18,
+                                        color: MyColors.orange),
+                                  ),
                           ),
                         ),
                       ),

@@ -16,7 +16,7 @@ class _GratitudeState extends State<GratitudePage> {
         URL: 'https://www.ownyourcancercoaching.com/gratitudeexercise',
         title: 'Gratitude',
         description: 'Complete the exercise below.',
-        URLname: 'Exercise',
+        URLname: 'Click here',
         dbName: 'gratitude',
         image: widget.image);
   }

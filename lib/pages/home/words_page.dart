@@ -61,8 +61,9 @@ class _WordButtonState extends State<WordButton> {
       child: Text(
         widget.word,
         style: TextStyle(
-            color:
-                WordsPage.pressed.contains(widget.word) ? MyColors.orange : Colors.black,
+            color: WordsPage.pressed.contains(widget.word)
+                ? MyColors.orange
+                : Colors.black,
             fontSize: 20),
       ),
     );
@@ -228,38 +229,52 @@ class _WordsPageState extends State<WordsPage> {
           ),
           Container(
             margin: EdgeInsets.only(top: 20),
-            child: TextButton(
+            child: OutlinedButton(
               onPressed: () async {
                 getUnlocked();
                 List tasks = await recommendationAlgorithm(
-                    FirebaseFirestore.instance, 'tasks', WordsPage.pressed, unlocked);
+                    FirebaseFirestore.instance,
+                    'tasks',
+                    WordsPage.pressed,
+                    unlocked);
                 setState(() {});
                 if (WordsPage.pressed.length >= 1) {
                   Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  RecommendationsPage(
-                                      feeling: widget.feeling,
-                                      recommendedTasks: tasks),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            const begin = Offset(1.0, 0.0);
-                            const end = Offset.zero;
-                            const curve = Curves.ease;
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          }));
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          RecommendationsPage(
+                              feeling: widget.feeling, recommendedTasks: tasks),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        const begin = Offset(1.0, 0.0);
+                        const end = Offset.zero;
+                        const curve = Curves.ease;
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    ),
+                  );
                 }
               },
-              child: Text(
+              style: OutlinedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 232, 236, 252),
+                  shape: RoundedRectangleBorder(
+                      side:
+                          const BorderSide(width: 0, style: BorderStyle.solid),
+                      borderRadius: BorderRadius.circular(50))),
+              child: const Text(
                 'Next',
-                style: TextStyle(color: Colors.black, fontSize: 20),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Poppins',
+                    fontSize: 18,
+                    color: MyColors.orange),
               ),
             ),
           ),

@@ -16,7 +16,7 @@ class _CopingWithFearsState extends State<CopingWithFearsPage> {
         URL: 'https://www.ownyourcancercoaching.com/copingwithcancerfears',
         title: 'Coping with fears',
         description: 'Complete the exercise below.',
-        URLname: 'Exercise',
+        URLname: 'Click here',
         dbName: 'coping_with_fears',
         image: widget.image);
   }

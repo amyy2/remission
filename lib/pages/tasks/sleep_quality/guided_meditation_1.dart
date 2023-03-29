@@ -17,7 +17,7 @@ class _GuidedMeditation1State extends State<GuidedMeditation1Page> {
             'https://www.youtube.com/watch?v=69o0P7s8GHE&ab_channel=JasonStephenson-SleepMeditationMusic',
         title: 'Guided meditation I',
         description: 'Do this guided meditation before bed.',
-        URLname: 'Meditation',
+        URLname: 'Click here for meditation',
         dbName: 'guided_meditation_1',
         image: widget.image);
   }

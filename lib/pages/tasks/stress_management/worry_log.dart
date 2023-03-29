@@ -16,7 +16,7 @@ class _WorryLogState extends State<WorryLogPage> {
         URL: 'https://www.ownyourcancercoaching.com/worrylog',
         title: 'Worry log',
         description: 'Complete the exercise below.',
-        URLname: 'Exercise',
+        URLname: 'Click here',
         dbName: 'worry_log',
         image: widget.image);
   }
