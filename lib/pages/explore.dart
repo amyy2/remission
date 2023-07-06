@@ -44,6 +44,7 @@ void addToCompleted(List task) async {
               (value) => listener?.cancel());
     }
   });
+  removeFromGoals(task);
 }
 
 void removeFromCompleted(List task) async {

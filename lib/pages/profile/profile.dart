@@ -155,7 +155,7 @@ class _ProfilePageState extends State<ProfilePage> {
           if (DateTime.now().difference(dates[0]) < Duration(hours: 24)) {
             streak = 1;
             for (var i = 1; i < dates.length; i++) {
-              if (dates[i].difference(dates[i - 1]) < Duration(days: 2)) {
+              if (dates[i - 1].difference(dates[i]) < Duration(days: 2)) {
                 setState(() {
                   streak += 1;
                 });
