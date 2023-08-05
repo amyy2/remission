@@ -3,7 +3,7 @@ import '../../../widgets/task_page_with_URL.dart';
 
 class MakeGroceryListPage extends StatefulWidget {
   final String image;
-  MakeGroceryListPage({required this.image});
+  const MakeGroceryListPage({super.key, required this.image});
 
   @override
   State<MakeGroceryListPage> createState() => _MakeGroceryListState();

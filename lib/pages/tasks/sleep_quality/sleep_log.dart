@@ -3,7 +3,7 @@ import '../../../widgets/task_page_with_URL.dart';
 
 class SleepLogPage extends StatefulWidget {
   final String image;
-  SleepLogPage({required this.image});
+  const SleepLogPage({super.key, required this.image});
 
   @override
   State<SleepLogPage> createState() => _SleepLogState();

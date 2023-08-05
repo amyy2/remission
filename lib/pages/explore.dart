@@ -1,10 +1,6 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:remission/pages/tasks/nutrition/choose_cff.dart';
 import 'package:remission/pages/tasks/nutrition/food_journal.dart';
 import 'package:remission/pages/tasks/nutrition/make_grocery_list.dart';
@@ -26,11 +22,11 @@ import 'package:remission/pages/tasks/stress_management/gratitude.dart';
 import 'package:remission/pages/tasks/stress_management/problem_solving.dart';
 import 'package:remission/pages/tasks/stress_management/worry_log.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 import '../colors.dart';
 
 export '../pages/explore.dart';
+import '../utilities/go_to_goals.dart';
 
 void addToCompleted(List task) async {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -61,7 +57,7 @@ void removeFromCompleted(List task) async {
   });
 }
 
-void addToGoals(List task) async {
+void addToGoals(List task, context) async {
   FirebaseAuth auth = FirebaseAuth.instance;
   StreamSubscription<User?>? listener;
   listener = auth.authStateChanges().listen((User? user) {
@@ -73,6 +69,7 @@ void addToGoals(List task) async {
               (value) => listener?.cancel());
     }
   });
+  goToGoals(context);
 }
 
 void removeFromGoals(List task) async {
@@ -169,7 +166,7 @@ class _ExplorePageState extends State<ExplorePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
                 onChanged: (value) {
                   setState(() {
@@ -177,20 +174,20 @@ class _ExplorePageState extends State<ExplorePage> {
                   });
                 },
                 controller: _searchController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Search...',
                   prefixIcon: Icon(Icons.search),
                 ),
               ),
-              SizedBox(height: 20),
-              Container(
+              const SizedBox(height: 20),
+              const SizedBox(
                 width: double.infinity,
                 height: 22,
                 child: Text('Complete your open tasks to unlock others',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 16)),
+                    style: TextStyle(fontSize: 16)),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               if (_filter.isNotEmpty)
                 Column(
                   children: [
@@ -742,10 +739,10 @@ class _ExplorePageState extends State<ExplorePage> {
   }
 
   GestureDetector Task(
-      String title, String description, page, String task_name, String image) {
+      String title, String description, page, String taskName, String image) {
     return GestureDetector(
       onTap: () {
-        ExplorePage.unlocked.contains(task_name)
+        ExplorePage.unlocked.contains(taskName)
             ? Navigator.push(
                 context,
                 PageRouteBuilder(
@@ -756,14 +753,14 @@ class _ExplorePageState extends State<ExplorePage> {
       },
       child: Column(
         children: [
-          Container(
+          SizedBox(
             width: 150.0,
             height: 100.0,
             child: AspectRatio(
               aspectRatio: 150 / 100,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: ExplorePage.unlocked.contains(task_name)
+                child: ExplorePage.unlocked.contains(taskName)
                     ? Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
@@ -773,7 +770,7 @@ class _ExplorePageState extends State<ExplorePage> {
                           ),
                         ),
                       )
-                    : Container(
+                    : SizedBox(
                         width: 150.0,
                         height: 100.0,
                         child: AspectRatio(
@@ -795,7 +792,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                     ),
                                   ),
                                 ),
-                                Align(
+                                const Align(
                                   alignment: Alignment.center,
                                   child: Icon(
                                     Icons.lock,
@@ -811,20 +808,20 @@ class _ExplorePageState extends State<ExplorePage> {
             ),
           ),
           const SizedBox(height: 2),
-          ExplorePage.unlocked.contains(task_name)
-              ? Container(
+          ExplorePage.unlocked.contains(taskName)
+              ? SizedBox(
                   width: 150,
                   height: 22,
                   child: Text(title,
                       textAlign: TextAlign.left,
                       style: const TextStyle(fontSize: 14)),
                 )
-              : Container(
+              : SizedBox(
                   width: 150,
                   height: 22,
                   child: RichText(
                     text: TextSpan(
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                       children: [
                         const WidgetSpan(
                           child: Padding(
@@ -836,13 +833,13 @@ class _ExplorePageState extends State<ExplorePage> {
                           ),
                         ),
                         TextSpan(
-                            text: ' ' + title,
+                            text: ' $title',
                             style: const TextStyle(fontSize: 14)),
                       ],
                     ),
                   ),
                 ),
-          Container(
+          SizedBox(
             width: 150,
             height: 53,
             child: Text(description,
@@ -855,10 +852,10 @@ class _ExplorePageState extends State<ExplorePage> {
   }
 
   GestureDetector searchTask(
-      String title, String description, page, String task_name, String image) {
+      String title, String description, page, String taskName, String image) {
     return GestureDetector(
       onTap: () {
-        ExplorePage.unlocked.contains(task_name)
+        ExplorePage.unlocked.contains(taskName)
             ? Navigator.push(
                 context,
                 PageRouteBuilder(
@@ -869,14 +866,14 @@ class _ExplorePageState extends State<ExplorePage> {
       },
       child: Column(
         children: [
-          Container(
+          SizedBox(
             width: (MediaQuery.of(context).size.width) - 20,
             height: 100.0,
             child: AspectRatio(
               aspectRatio: (MediaQuery.of(context).size.width) - 20 / 100,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: ExplorePage.unlocked.contains(task_name)
+                child: ExplorePage.unlocked.contains(taskName)
                     ? Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
@@ -886,7 +883,7 @@ class _ExplorePageState extends State<ExplorePage> {
                           ),
                         ),
                       )
-                    : Container(
+                    : SizedBox(
                         width: (MediaQuery.of(context).size.width) - 20,
                         height: 100.0,
                         child: AspectRatio(
@@ -908,7 +905,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                     ),
                                   ),
                                 ),
-                                Align(
+                                const Align(
                                   alignment: Alignment.center,
                                   child: Icon(
                                     Icons.lock,
@@ -924,20 +921,20 @@ class _ExplorePageState extends State<ExplorePage> {
             ),
           ),
           const SizedBox(height: 2),
-          ExplorePage.unlocked.contains(task_name)
-              ? Container(
+          ExplorePage.unlocked.contains(taskName)
+              ? SizedBox(
                   width: (MediaQuery.of(context).size.width) - 20,
                   height: 22,
                   child: Text(title,
                       textAlign: TextAlign.left,
                       style: const TextStyle(fontSize: 14)),
                 )
-              : Container(
+              : SizedBox(
                   width: (MediaQuery.of(context).size.width) - 20,
                   height: 22,
                   child: RichText(
                     text: TextSpan(
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                       children: [
                         const WidgetSpan(
                           child: Padding(
@@ -949,13 +946,13 @@ class _ExplorePageState extends State<ExplorePage> {
                           ),
                         ),
                         TextSpan(
-                            text: ' ' + title,
+                            text: ' $title',
                             style: const TextStyle(fontSize: 14)),
                       ],
                     ),
                   ),
                 ),
-          Container(
+          SizedBox(
             width: (MediaQuery.of(context).size.width) - 20,
             height: 53,
             child: Text(description,

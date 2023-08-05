@@ -1,18 +1,11 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:remission/pages/home/check-in.dart';
-import 'package:remission/pages/home/words_page.dart';
 import 'package:remission/services/firebase_auth_methods.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:intl/intl.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -88,8 +81,8 @@ class _HomePageState extends State<HomePage> {
         final querySnapshot =
             await FirebaseFirestore.instance.collection('quotes').get();
         List quotes = querySnapshot.docs.toList();
-        final _random = new Random();
-        element = quotes[_random.nextInt(quotes.length)];
+        final random = Random();
+        element = quotes[random.nextInt(quotes.length)];
         quoteFinished = true;
         last_date = DateTime(
             DateTime.now().year, DateTime.now().month, DateTime.now().day);
@@ -102,8 +95,8 @@ class _HomePageState extends State<HomePage> {
       final querySnapshot =
           await FirebaseFirestore.instance.collection('quotes').get();
       List quotes = querySnapshot.docs.toList();
-      final _random = new Random();
-      element = quotes[_random.nextInt(quotes.length)];
+      final random = Random();
+      element = quotes[random.nextInt(quotes.length)];
       quoteFinished = true;
     }
   }
@@ -121,6 +114,7 @@ class _HomePageState extends State<HomePage> {
 
   static String id = 'homePage';
 
+  @override
   Widget build(BuildContext context) {
     if (mounted) final user = context.read<FirebaseAuthMethods>().user;
     return VisibilityDetector(
@@ -144,12 +138,12 @@ class _HomePageState extends State<HomePage> {
                   fontSize: 40)),
           backgroundColor: Colors.white,
           elevation: 0,
-          flexibleSpace: Align(
+          flexibleSpace: const Align(
             alignment: Alignment.topLeft,
             child: Image(image: AssetImage('images/ribbon_1.jpg'), width: 180),
           ),
         ),
-        body: Container(
+        body: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: SingleChildScrollView(
             child: Column(
@@ -175,10 +169,10 @@ class _HomePageState extends State<HomePage> {
                           width: double.infinity,
                           margin: const EdgeInsets.only(
                               top: 20, bottom: 20, left: 20, right: 20),
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Color.fromARGB(255, 144, 144, 144),
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(22)),
+                                BorderRadius.all(Radius.circular(22)),
                           ),
                           child: const Center(
                             child: Text(
@@ -195,7 +189,7 @@ class _HomePageState extends State<HomePage> {
                               PageRouteBuilder(
                                 pageBuilder:
                                     (context, animation, secondaryAnimation) =>
-                                        CheckInPage(),
+                                        const CheckInPage(),
                                 transitionDuration: Duration.zero,
                                 reverseTransitionDuration: Duration.zero,
                               ),
@@ -206,10 +200,10 @@ class _HomePageState extends State<HomePage> {
                             width: double.infinity,
                             margin: const EdgeInsets.only(
                                 top: 20, bottom: 20, left: 20, right: 20),
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: MyColors.orange,
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(22)),
+                                  BorderRadius.all(Radius.circular(22)),
                             ),
                             child: const Center(
                               child: Text(
@@ -241,12 +235,12 @@ class _HomePageState extends State<HomePage> {
                                 image: AssetImage(element['image']),
                               )),
                           child: Padding(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             child: Center(
                               child: Text(
                                 element['quote'],
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 22, color: Colors.white),
                               ),
                             ),

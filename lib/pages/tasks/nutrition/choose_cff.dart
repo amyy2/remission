@@ -1,12 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/task_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class ChooseCFFPage extends StatefulWidget {
   final String image;
-  ChooseCFFPage({required this.image});
+  const ChooseCFFPage({super.key, required this.image});
 
   @override
   State<ChooseCFFPage> createState() => _ChooseCFFState();

@@ -2,17 +2,12 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:remission/pages/login/sign_in.dart';
-import 'package:remission/pages/login/sign_up_1.dart';
 import 'package:remission/services/firebase_auth_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:remission/utilities/showSnackBar.dart';
 
 import '../../colors.dart';
-import '../main_page.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static String routeName = '/welcome-page';
@@ -81,7 +76,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('images/background.jpg'), fit: BoxFit.cover)),
         child: SingleChildScrollView(

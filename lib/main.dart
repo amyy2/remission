@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/i10n.dart';
-import 'package:remission/pages/login/sign_in.dart';
 import 'package:remission/pages/login/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:remission/colors.dart';
 import 'package:remission/pages/main_page.dart';
 import 'package:remission/pages/splash.dart';
-import 'package:remission/pages/tasks/nutrition/choose_cff.dart';
-import 'package:remission/pages/tasks/nutrition/print_cff_list.dart';
 import 'package:remission/services/firebase_auth_methods.dart';
 import 'package:provider/provider.dart';
-import 'firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -34,7 +26,7 @@ Future<void> initNotifications() async {
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
 
-  final InitializationSettings initializationSettings = InitializationSettings(
+  const InitializationSettings initializationSettings = InitializationSettings(
     android: initializationSettingsAndroid,
     iOS: DarwinInitializationSettings(),
   );

@@ -1,23 +1,16 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutterfire_ui/auth.dart';
-import 'package:remission/pages/home/home.dart';
 import 'package:remission/pages/login/sign_up_1.dart';
-import 'package:remission/pages/login/welcome_screen.dart';
 import 'package:remission/pages/main_page.dart';
 
 import '../../colors.dart';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-import '../../services/firebase_auth_methods.dart';
-import '../../utilities/showSnackBar.dart';
 
 var _physical_limitations = [
   "Not mobile at all",
@@ -73,7 +66,6 @@ class _SignUp2State extends State<SignUp2> {
           'easy_or_fast': easyChecked,
           'never_satisfied': satisfiedChecked
         }).then((value) => listener?.cancel());
-        ;
       }
     });
   }
@@ -184,7 +176,7 @@ class _SignUp2State extends State<SignUp2> {
                         style: TextStyle(
                             fontFamily: 'Poppins',
                             color: MyColors.darkBlue,
-                            fontSize: 18),
+                            fontSize: 14),
                       ),
                       icon: const Icon(
                         Icons.arrow_drop_down,
@@ -212,6 +204,7 @@ class _SignUp2State extends State<SignUp2> {
                         if (value == null) {
                           return 'Please select a physical state';
                         }
+                        return null;
                       },
                       onChanged: (value) {
                         currPLValue = value.toString();
@@ -243,7 +236,7 @@ class _SignUp2State extends State<SignUp2> {
                         style: TextStyle(
                             fontFamily: 'Poppins',
                             color: MyColors.darkBlue,
-                            fontSize: 18),
+                            fontSize: 14),
                       ),
                       icon: const Icon(
                         Icons.arrow_drop_down,
@@ -263,7 +256,7 @@ class _SignUp2State extends State<SignUp2> {
                                   style: const TextStyle(
                                       fontFamily: 'Poppins',
                                       color: MyColors.darkBlue,
-                                      fontSize: 18),
+                                      fontSize: 14),
                                 ),
                               ))
                           .toList(),
@@ -271,6 +264,7 @@ class _SignUp2State extends State<SignUp2> {
                         if (value == null) {
                           return 'Please select a diet state';
                         }
+                        return null;
                       },
                       onChanged: (value) {
                         currDValue = value.toString();
@@ -290,7 +284,7 @@ class _SignUp2State extends State<SignUp2> {
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Poppins',
-                        fontSize: 18,
+                        fontSize: 14,
                         color: MyColors.darkBlue),
                   ),
                 ),
@@ -304,7 +298,7 @@ class _SignUp2State extends State<SignUp2> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 18,
+                            fontSize: 14,
                             color: MyColors.darkBlue),
                       ),
                     ),
@@ -335,7 +329,7 @@ class _SignUp2State extends State<SignUp2> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 18,
+                            fontSize: 14,
                             color: MyColors.darkBlue),
                       ),
                     ),
@@ -370,7 +364,7 @@ class _SignUp2State extends State<SignUp2> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 18,
+                            fontSize: 14,
                             color: MyColors.darkBlue),
                       ),
                     ),
@@ -401,7 +395,7 @@ class _SignUp2State extends State<SignUp2> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 18,
+                            fontSize: 14,
                             color: MyColors.darkBlue),
                       ),
                     ),
@@ -436,7 +430,7 @@ class _SignUp2State extends State<SignUp2> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 18,
+                            fontSize: 14,
                             color: MyColors.darkBlue),
                       ),
                     ),
@@ -467,7 +461,7 @@ class _SignUp2State extends State<SignUp2> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 18,
+                            fontSize: 14,
                             color: MyColors.darkBlue),
                       ),
                     ),
@@ -502,7 +496,7 @@ class _SignUp2State extends State<SignUp2> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 18,
+                            fontSize: 14,
                             color: MyColors.darkBlue),
                       ),
                     ),
@@ -533,7 +527,7 @@ class _SignUp2State extends State<SignUp2> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 18,
+                            fontSize: 14,
                             color: MyColors.darkBlue),
                       ),
                     ),
@@ -568,7 +562,7 @@ class _SignUp2State extends State<SignUp2> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 18,
+                            fontSize: 14,
                             color: MyColors.darkBlue),
                       ),
                     ),
@@ -603,7 +597,7 @@ class _SignUp2State extends State<SignUp2> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 18,
+                            fontSize: 14,
                             color: MyColors.darkBlue),
                       ),
                     ),
@@ -638,7 +632,7 @@ class _SignUp2State extends State<SignUp2> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 18,
+                            fontSize: 14,
                             color: MyColors.darkBlue),
                       ),
                     ),

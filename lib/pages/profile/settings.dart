@@ -1,20 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutterfire_ui/auth.dart';
 import 'package:remission/pages/login/welcome_screen.dart';
 import 'package:remission/pages/profile/change_email.dart';
 import 'package:remission/pages/profile/change_password.dart';
 import 'package:remission/pages/profile/edit_profile.dart';
 import 'package:remission/pages/profile/profile.dart';
-import 'package:remission/pages/profile/settings.dart';
 import '../../colors.dart';
 import '../../services/firebase_auth_methods.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -63,7 +55,7 @@ class _SettingsPageState extends State<SettingsPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(height: 40),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: GestureDetector(
               onTap: () {
@@ -87,7 +79,7 @@ class _SettingsPageState extends State<SettingsPage> {
           const SizedBox(height: 20),
           const Divider(color: Colors.black),
           const SizedBox(height: 20),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: GestureDetector(
               onTap: () {
@@ -111,7 +103,7 @@ class _SettingsPageState extends State<SettingsPage> {
           const SizedBox(height: 20),
           const Divider(color: Colors.black),
           const SizedBox(height: 20),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: GestureDetector(
               onTap: () {
@@ -119,7 +111,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        ChangePasswordScreen(),
+                        const ChangePasswordScreen(),
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,
                   ),
@@ -135,7 +127,7 @@ class _SettingsPageState extends State<SettingsPage> {
           const SizedBox(height: 20),
           const Divider(color: Colors.black),
           const SizedBox(height: 20),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: GestureDetector(
               onTap: () {
@@ -153,7 +145,7 @@ class _SettingsPageState extends State<SettingsPage> {
           const SizedBox(height: 20),
           const Divider(color: Colors.black),
           const SizedBox(height: 20),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: GestureDetector(
               onTap: () => showDialog<String>(

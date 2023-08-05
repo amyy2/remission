@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dart_random_choice/dart_random_choice.dart';
 import 'package:multiple_random_choice/multiple_random_choice.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 void updateUnlocked(List tasks) async {
   FirebaseAuth auth = FirebaseAuth.instance;

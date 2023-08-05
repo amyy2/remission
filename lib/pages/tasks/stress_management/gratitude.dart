@@ -3,7 +3,7 @@ import '../../../widgets/task_page_with_URL.dart';
 
 class GratitudePage extends StatefulWidget {
   final String image;
-  GratitudePage({required this.image});
+  const GratitudePage({super.key, required this.image});
 
   @override
   State<GratitudePage> createState() => _GratitudeState();

@@ -1,11 +1,7 @@
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:remission/pages/explore.dart';
 import 'package:remission/pages/tasks/nutrition/choose_cff.dart';
 import 'package:remission/pages/tasks/nutrition/dietary_smart_goals.dart';
@@ -142,7 +138,7 @@ class _GoalsPageState extends State<GoalsPage> {
         getGoals();
       },
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         appBar: AppBar(
           scrolledUnderElevation: 3,
           title: const Text('My Goals',
@@ -157,14 +153,14 @@ class _GoalsPageState extends State<GoalsPage> {
           onRefresh: _pullToRefresh,
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
-            child: Container(
+            child: SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: <Widget>[
                   if (finished)
-                    if (GoalsPage.goals.length == 0)
-                      Column(children: const [
+                    if (GoalsPage.goals.isEmpty)
+                      const Column(children: [
                         SizedBox(height: 20),
                         Text(
                           'Add some tasks from the explore page',
@@ -175,7 +171,7 @@ class _GoalsPageState extends State<GoalsPage> {
                       for (var goal in GoalsPage.goals)
                         Column(
                           children: [
-                            SizedBox(height: 30),
+                            const SizedBox(height: 30),
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(
@@ -187,7 +183,7 @@ class _GoalsPageState extends State<GoalsPage> {
                                   ),
                                 );
                               },
-                              child: Container(
+                              child: SizedBox(
                                 width: 350.0,
                                 height: 75.0,
                                 child: AspectRatio(
@@ -195,7 +191,7 @@ class _GoalsPageState extends State<GoalsPage> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(22),
                                     child: Container(
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         color:
                                             Color.fromARGB(255, 232, 232, 232),
                                       ),
@@ -206,7 +202,7 @@ class _GoalsPageState extends State<GoalsPage> {
                                           Text(
                                             '    ' + tasksMap[goal]['title'],
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.black),
                                           ),
@@ -215,7 +211,7 @@ class _GoalsPageState extends State<GoalsPage> {
                                                 removeFromGoals([goal]);
                                                 getGoals();
                                               },
-                                              icon: FaIcon(
+                                              icon: const FaIcon(
                                                 FontAwesomeIcons.x,
                                                 size: 20,
                                                 color: Colors.black,

@@ -1,21 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutterfire_ui/auth.dart';
-import 'package:provider/provider.dart';
-import 'package:remission/pages/login/sign_up_2.dart';
-import 'package:remission/pages/login/welcome_screen.dart';
-import 'package:remission/pages/profile/profile.dart';
 import 'package:remission/pages/profile/settings.dart';
 import 'package:remission/utilities/showSnackBar.dart';
 
 import '../../colors.dart';
-import '../../services/firebase_auth_methods.dart';
 
 class ChangeEmailScreen extends StatefulWidget {
   const ChangeEmailScreen({super.key});
@@ -98,7 +86,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                   const EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
               child: TextFormField(
                 controller: emailController,
-                decoration: InputDecoration(labelText: 'New email'),
+                decoration: const InputDecoration(labelText: 'New email'),
                 style: const TextStyle(fontSize: 20),
               ),
             ),
@@ -107,7 +95,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                   const EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
               child: TextFormField(
                 controller: passwordController,
-                decoration: InputDecoration(labelText: 'Current password'),
+                decoration: const InputDecoration(labelText: 'Current password'),
                 style: const TextStyle(fontSize: 20),
               ),
             ),
@@ -123,7 +111,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                         password: passwordController.text);
                   },
                   style: OutlinedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 232, 236, 252),
+                      backgroundColor: const Color.fromARGB(255, 232, 236, 252),
                       shape: RoundedRectangleBorder(
                           side: const BorderSide(
                               width: 0, style: BorderStyle.solid),

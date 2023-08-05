@@ -3,7 +3,7 @@ import '../../../widgets/task_page_with_URL.dart';
 
 class GuidedMeditation1Page extends StatefulWidget {
   final String image;
-  GuidedMeditation1Page({required this.image});
+  const GuidedMeditation1Page({super.key, required this.image});
 
   @override
   State<GuidedMeditation1Page> createState() => _GuidedMeditation1State();

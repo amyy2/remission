@@ -3,7 +3,7 @@ import '../../../widgets/task_page_with_URL.dart';
 
 class SleepTipsPage extends StatefulWidget {
   final String image;
-  SleepTipsPage({required this.image});
+  const SleepTipsPage({super.key, required this.image});
 
   @override
   State<SleepTipsPage> createState() => _SleepTipsState();

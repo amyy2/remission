@@ -3,7 +3,7 @@ import '../../../widgets/task_page_with_URL.dart';
 
 class BalancePage extends StatefulWidget {
   final String image;
-  BalancePage({required this.image});
+  const BalancePage({super.key, required this.image});
 
   @override
   State<BalancePage> createState() => _BalanceState();

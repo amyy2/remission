@@ -3,7 +3,7 @@ import '../../../widgets/task_page_with_URL.dart';
 
 class PhysicalSMARTGoalsPage extends StatefulWidget {
   final String image;
-  PhysicalSMARTGoalsPage({required this.image});
+  const PhysicalSMARTGoalsPage({super.key, required this.image});
 
   @override
   State<PhysicalSMARTGoalsPage> createState() => _PhysicalSMARTGoalsState();

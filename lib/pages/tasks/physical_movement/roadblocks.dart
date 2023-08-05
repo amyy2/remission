@@ -3,7 +3,7 @@ import '../../../widgets/task_page.dart';
 
 class RoadblocksPage extends StatefulWidget {
   final String image;
-  RoadblocksPage({required this.image});
+  const RoadblocksPage({super.key, required this.image});
 
   @override
   State<RoadblocksPage> createState() => _RoadblocksState();

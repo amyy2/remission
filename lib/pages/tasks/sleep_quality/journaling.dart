@@ -3,7 +3,7 @@ import '../../../widgets/task_page_with_URL.dart';
 
 class JournalingPage extends StatefulWidget {
   final String image;
-  JournalingPage({required this.image});
+  const JournalingPage({super.key, required this.image});
 
   @override
   State<JournalingPage> createState() => _JournalingState();

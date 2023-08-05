@@ -3,7 +3,7 @@ import '../../../widgets/task_page.dart';
 
 class RewardingYourselfPage extends StatefulWidget {
   final String image;
-  RewardingYourselfPage({required this.image});
+  const RewardingYourselfPage({super.key, required this.image});
 
   @override
   State<RewardingYourselfPage> createState() => _RewardingYourselfState();

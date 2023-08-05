@@ -1,21 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutterfire_ui/auth.dart';
-import 'package:provider/provider.dart';
-import 'package:remission/pages/login/sign_up_2.dart';
-import 'package:remission/pages/login/welcome_screen.dart';
-import 'package:remission/pages/profile/profile.dart';
 import 'package:remission/pages/profile/settings.dart';
 import 'package:remission/utilities/showSnackBar.dart';
 
 import '../../colors.dart';
-import '../../services/firebase_auth_methods.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -102,7 +90,7 @@ class _ChangePassswordScreenState extends State<ChangePasswordScreen> {
                   const EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
               child: TextFormField(
                 controller: currPasswordController,
-                decoration: InputDecoration(labelText: 'Current password'),
+                decoration: const InputDecoration(labelText: 'Current password'),
                 style: const TextStyle(fontSize: 20),
               ),
             ),
@@ -111,7 +99,7 @@ class _ChangePassswordScreenState extends State<ChangePasswordScreen> {
                   const EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
               child: TextFormField(
                 controller: newPasswordController,
-                decoration: InputDecoration(labelText: 'New password'),
+                decoration: const InputDecoration(labelText: 'New password'),
                 style: const TextStyle(fontSize: 20),
               ),
             ),
@@ -120,7 +108,7 @@ class _ChangePassswordScreenState extends State<ChangePasswordScreen> {
                   const EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
               child: TextFormField(
                 controller: confirmPasswordController,
-                decoration: InputDecoration(labelText: 'Confirm new password'),
+                decoration: const InputDecoration(labelText: 'Confirm new password'),
                 style: const TextStyle(fontSize: 20),
               ),
             ),
@@ -137,7 +125,7 @@ class _ChangePassswordScreenState extends State<ChangePasswordScreen> {
                         newPassword: newPasswordController.text);
                   },
                   style: OutlinedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 232, 236, 252),
+                      backgroundColor: const Color.fromARGB(255, 232, 236, 252),
                       shape: RoundedRectangleBorder(
                           side: const BorderSide(
                               width: 0, style: BorderStyle.solid),

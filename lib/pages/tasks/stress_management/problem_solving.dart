@@ -3,7 +3,7 @@ import 'package:remission/widgets/task_page_with_URL.dart';
 
 class ProblemSolvingPage extends StatefulWidget {
   final String image;
-  ProblemSolvingPage({required this.image});
+  const ProblemSolvingPage({super.key, required this.image});
 
   @override
   State<ProblemSolvingPage> createState() => _ProblemSolvingState();

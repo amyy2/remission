@@ -3,7 +3,7 @@ import '../../../widgets/task_page.dart';
 
 class StayingMotivatedPage extends StatefulWidget {
   final String image;
-  StayingMotivatedPage({required this.image});
+  const StayingMotivatedPage({super.key, required this.image});
 
   @override
   State<StayingMotivatedPage> createState() => _StayingMotivatedState();

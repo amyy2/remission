@@ -1,14 +1,7 @@
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:remission/pages/home/check-in.dart';
-import 'package:remission/pages/home/home.dart';
 import 'package:remission/pages/home/recommendations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 import '../../colors.dart';
 import '../../recommendation_algorithm.dart';
@@ -35,7 +28,7 @@ class _WordButtonState extends State<WordButton> {
               side: const BorderSide(width: 0, style: BorderStyle.solid),
               borderRadius: BorderRadius.circular(50)),
           backgroundColor: WordsPage.pressed.contains(widget.word)
-              ? Color.fromARGB(255, 232, 236, 252)
+              ? const Color.fromARGB(255, 232, 236, 252)
               : Colors.white),
       onPressed: () {
         setState(() {
@@ -64,7 +57,7 @@ class _WordButtonState extends State<WordButton> {
             color: WordsPage.pressed.contains(widget.word)
                 ? MyColors.orange
                 : Colors.black,
-            fontSize: 20),
+            fontSize: 14),
       ),
     );
   }
@@ -130,25 +123,25 @@ class _WordsPageState extends State<WordsPage> {
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(top: 10, bottom: 10),
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
             width: double.infinity,
-            child: Text(
+            child: const Text(
               "Which words describe how \nyou're feeling?",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 25),
+              style: TextStyle(fontSize: 18),
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 10, bottom: 20),
+            padding: const EdgeInsets.only(top: 10, bottom: 20),
             width: double.infinity,
-            child: Text(
+            child: const Text(
               "Choose up to 3",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 14),
             ),
           ),
           Container(
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 WordButton(word: 'sad'),
@@ -158,7 +151,7 @@ class _WordsPageState extends State<WordsPage> {
             ),
           ),
           Container(
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 WordButton(word: 'angry'),
@@ -168,7 +161,7 @@ class _WordsPageState extends State<WordsPage> {
             ),
           ),
           Container(
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 WordButton(word: 'depressed'),
@@ -178,7 +171,7 @@ class _WordsPageState extends State<WordsPage> {
             ),
           ),
           Container(
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 WordButton(word: 'stressed'),
@@ -188,7 +181,7 @@ class _WordsPageState extends State<WordsPage> {
             ),
           ),
           Container(
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 WordButton(word: 'achy'),
@@ -198,7 +191,7 @@ class _WordsPageState extends State<WordsPage> {
             ),
           ),
           Container(
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 WordButton(word: 'moody'),
@@ -208,7 +201,7 @@ class _WordsPageState extends State<WordsPage> {
             ),
           ),
           Container(
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 WordButton(word: 'loved'),
@@ -218,7 +211,7 @@ class _WordsPageState extends State<WordsPage> {
             ),
           ),
           Container(
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 WordButton(word: 'frustrated'),
@@ -228,7 +221,7 @@ class _WordsPageState extends State<WordsPage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 20),
+            margin: const EdgeInsets.only(top: 20),
             child: OutlinedButton(
               onPressed: () async {
                 getUnlocked();
@@ -238,7 +231,7 @@ class _WordsPageState extends State<WordsPage> {
                     WordsPage.pressed,
                     unlocked);
                 setState(() {});
-                if (WordsPage.pressed.length >= 1) {
+                if (WordsPage.pressed.isNotEmpty) {
                   Navigator.push(
                     context,
                     PageRouteBuilder(
@@ -262,7 +255,7 @@ class _WordsPageState extends State<WordsPage> {
                 }
               },
               style: OutlinedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 232, 236, 252),
+                  backgroundColor: const Color.fromARGB(255, 232, 236, 252),
                   shape: RoundedRectangleBorder(
                       side:
                           const BorderSide(width: 0, style: BorderStyle.solid),
@@ -273,7 +266,7 @@ class _WordsPageState extends State<WordsPage> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Poppins',
-                    fontSize: 18,
+                    fontSize: 14,
                     color: MyColors.orange),
               ),
             ),

@@ -3,7 +3,7 @@ import '../../../widgets/task_page_with_URL.dart';
 
 class FoodJournalPage extends StatefulWidget {
   final String image;
-  FoodJournalPage({required this.image});
+  const FoodJournalPage({super.key, required this.image});
 
   @override
   State<FoodJournalPage> createState() => _FoodJournalState();

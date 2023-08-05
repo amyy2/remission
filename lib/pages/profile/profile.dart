@@ -1,9 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutterfire_ui/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:remission/pages/login/welcome_screen.dart';
 import 'package:remission/pages/profile/settings.dart';
@@ -14,10 +10,8 @@ import '../../colors.dart';
 import '../../services/firebase_auth_methods.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:intl/intl.dart';
 
-import '../goals.dart';
 import '../home/check-in.dart';
 import '../home/words_page.dart';
 import '../home/recommendations.dart';
@@ -108,13 +102,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 .collection('tasks')
                 .where("name", isEqualTo: ProfilePage.completed[i])
                 .get();
-            task.docs.forEach(
-              (doc) {
+            for (var doc in task.docs) {
                 setState(() {
                   points += doc["points"];
                 });
-              },
-            );
+              }
           }
         }
       },
@@ -152,10 +144,10 @@ class _ProfilePageState extends State<ProfilePage> {
           }
           dates.sort((b, a) => a.compareTo(b));
           // if latest entry is within the past 24 hours
-          if (DateTime.now().difference(dates[0]) < Duration(hours: 24)) {
+          if (DateTime.now().difference(dates[0]) < const Duration(hours: 24)) {
             streak = 1;
             for (var i = 1; i < dates.length; i++) {
-              if (dates[i - 1].difference(dates[i]) < Duration(days: 2)) {
+              if (dates[i - 1].difference(dates[i]) < const Duration(days: 2)) {
                 setState(() {
                   streak += 1;
                 });
@@ -235,13 +227,13 @@ class _ProfilePageState extends State<ProfilePage> {
               Icons.settings,
               color: MyColors.darkBlue,
             ),
-            padding: EdgeInsets.only(right: 20),
+            padding: const EdgeInsets.only(right: 20),
             onPressed: () {
               Navigator.push(
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        SettingsPage(),
+                        const SettingsPage(),
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,
                   ));
@@ -253,7 +245,7 @@ class _ProfilePageState extends State<ProfilePage> {
         onRefresh: _pullToRefresh,
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          child: Container(
+          child: SizedBox(
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: [
@@ -273,7 +265,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   padding: const EdgeInsets.only(top: 20, bottom: 20),
                   width: double.infinity,
                   child: Text(
-                    "Email: " + user.email!,
+                    "Email: ${user.email!}",
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 20),
                   ),
@@ -297,7 +289,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         );
                       },
                       style: OutlinedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 232, 236, 252),
+                          backgroundColor: const Color.fromARGB(255, 232, 236, 252),
                           shape: RoundedRectangleBorder(
                               side: const BorderSide(
                                   width: 0, style: BorderStyle.solid),
@@ -320,17 +312,17 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        FaIcon(FontAwesomeIcons.fire,
+                        const FaIcon(FontAwesomeIcons.fire,
                             color: Colors.orange, size: 22),
                         Text(
-                          "  Current streak: ${streak} days",
+                          "  Current streak: $streak days",
                           textAlign: TextAlign.center,
                           style: const TextStyle(fontSize: 18),
                         ),
                       ],
                     )),
                 TableCalendar(
-                  headerStyle: HeaderStyle(
+                  headerStyle: const HeaderStyle(
                     formatButtonVisible: false,
                   ),
                   firstDay: DateTime.utc(2010, 10, 16),
@@ -381,7 +373,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           return Stack(
                             children: [
                               Container(
-                                margin: EdgeInsets.all(14),
+                                margin: const EdgeInsets.all(14),
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   color: MyColors.lightBlue,
@@ -389,7 +381,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 child: Text(
                                   date.day.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -406,6 +398,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           );
                         }
                       }
+                      return null;
                     },
                     defaultBuilder: (context, date, _) {
                       if (finished) {
@@ -451,14 +444,14 @@ class _ProfilePageState extends State<ProfilePage> {
                           return Stack(
                             children: [
                               Container(
-                                margin: EdgeInsets.all(4),
+                                margin: const EdgeInsets.all(4),
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                                 child: Text(
                                   date.day.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -483,7 +476,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   padding: const EdgeInsets.only(top: 40, bottom: 5),
                   width: double.infinity,
                   child: Text(
-                    "My total points: " + points.toString(),
+                    "My total points: $points",
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 18),
                   ),

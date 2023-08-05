@@ -3,7 +3,7 @@ import '../../../widgets/task_page_with_URL.dart';
 
 class ActionPlanPage extends StatefulWidget {
   final String image;
-  ActionPlanPage({required this.image});
+  const ActionPlanPage({super.key, required this.image});
 
   @override
   State<ActionPlanPage> createState() => _ActionPlanState();

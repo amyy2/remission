@@ -1,16 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutterfire_ui/auth.dart';
 import 'package:provider/provider.dart';
-import 'package:remission/pages/login/sign_up_2.dart';
-import 'package:remission/pages/login/welcome_screen.dart';
-import 'package:remission/pages/profile/profile.dart';
 import 'package:remission/pages/profile/settings.dart';
 
 import '../../colors.dart';
@@ -125,7 +117,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             editField(nameController, 'Name'),
             editField(ageController, 'Age'),
             Container(
-              padding: EdgeInsets.only(top: 13, left: 20, right: 20),
+              padding: const EdgeInsets.only(top: 13, left: 20, right: 20),
               width: double.infinity,
               child: const Text('Gender',
                   textAlign: TextAlign.left,
@@ -391,7 +383,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ],
             ),
             Container(
-              padding: EdgeInsets.only(top: 13, left: 20, right: 20),
+              padding: const EdgeInsets.only(top: 13, left: 20, right: 20),
               width: double.infinity,
               child: const Text('Physical limitations',
                   textAlign: TextAlign.left,
@@ -452,7 +444,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 13, left: 20, right: 20),
+              padding: const EdgeInsets.only(top: 13, left: 20, right: 20),
               width: double.infinity,
               child: const Text('Current diet',
                   textAlign: TextAlign.left,

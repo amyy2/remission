@@ -1,13 +1,8 @@
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:remission/pages/explore.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 import '../../../colors.dart';
 
@@ -19,8 +14,9 @@ class TaskPageWithURL extends StatefulWidget {
   final String dbName;
   final String image;
 
-  TaskPageWithURL(
-      {required this.URL,
+  const TaskPageWithURL(
+      {super.key,
+      required this.URL,
       required this.title,
       required this.description,
       required this.URLname,
@@ -82,7 +78,7 @@ class _TaskState extends State<TaskPageWithURL> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         scrolledUnderElevation: 3,
         backgroundColor: Colors.white,
@@ -104,7 +100,7 @@ class _TaskState extends State<TaskPageWithURL> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               width: 300.0,
               height: 200.0,
               child: AspectRatio(
@@ -123,27 +119,29 @@ class _TaskState extends State<TaskPageWithURL> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 16, left: 20, right: 20),
+              padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
               width: double.infinity,
               child: Text(widget.title,
                   textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold)),
             ),
             Container(
-              padding: EdgeInsets.only(top: 16, left: 20, right: 20),
+              padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
               width: double.infinity,
               child: Text(widget.description,
-                  textAlign: TextAlign.left, style: TextStyle(fontSize: 15)),
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(fontSize: 15)),
             ),
             GestureDetector(
               onTap: _launchUrl,
               child: Container(
-                padding:
-                    EdgeInsets.only(top: 16, left: 20, right: 20, bottom: 16),
+                padding: const EdgeInsets.only(
+                    top: 16, left: 20, right: 20, bottom: 16),
                 width: double.infinity,
                 child: Text(widget.URLname,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: MyColors.darkBlue)),
@@ -162,7 +160,7 @@ class _TaskState extends State<TaskPageWithURL> {
                             getGoals()
                           }
                         : {
-                            addToGoals([widget.dbName]),
+                            addToGoals([widget.dbName], context),
                             getGoals()
                           };
                   },
@@ -173,7 +171,7 @@ class _TaskState extends State<TaskPageWithURL> {
                               width: 0, style: BorderStyle.solid),
                           borderRadius: BorderRadius.circular(50))),
                   child: goals.contains(widget.dbName)
-                      ? Text(
+                      ? const Text(
                           'Remove task from goals',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -182,7 +180,7 @@ class _TaskState extends State<TaskPageWithURL> {
                               fontSize: 18,
                               color: MyColors.orange),
                         )
-                      : Text(
+                      : const Text(
                           'Add task to goals',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -218,7 +216,7 @@ class _TaskState extends State<TaskPageWithURL> {
                               width: 0, style: BorderStyle.solid),
                           borderRadius: BorderRadius.circular(50))),
                   child: completed.contains(widget.dbName)
-                      ? Text(
+                      ? const Text(
                           'Mark as incomplete',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -227,7 +225,7 @@ class _TaskState extends State<TaskPageWithURL> {
                               fontSize: 18,
                               color: MyColors.orange),
                         )
-                      : Text(
+                      : const Text(
                           'Mark as completed',
                           textAlign: TextAlign.center,
                           style: TextStyle(

@@ -3,7 +3,7 @@ import '../../../widgets/task_page_with_URL.dart';
 
 class CopingWithFearsPage extends StatefulWidget {
   final String image;
-  CopingWithFearsPage({required this.image});
+  const CopingWithFearsPage({super.key, required this.image});
 
   @override
   State<CopingWithFearsPage> createState() => _CopingWithFearsState();

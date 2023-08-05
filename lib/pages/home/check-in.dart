@@ -1,17 +1,7 @@
-import 'dart:math';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:remission/pages/home/home.dart';
 import 'package:remission/pages/home/words_page.dart';
-import 'package:remission/services/firebase_auth_methods.dart';
-import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 import '../../colors.dart';
 
@@ -39,13 +29,14 @@ class _CheckInPageState extends State<CheckInPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 300), () {
+    Future.delayed(const Duration(milliseconds: 300), () {
       setState(() {
         opacity = 1;
       });
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
@@ -70,7 +61,7 @@ class _CheckInPageState extends State<CheckInPage> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 150),
+          const SizedBox(height: 150),
           Container(
             margin: const EdgeInsets.all(20),
             width: double.infinity,
@@ -81,12 +72,12 @@ class _CheckInPageState extends State<CheckInPage> {
               children: [
                 AnimatedOpacity(
                   opacity: opacity,
-                  duration: Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
                   child: Container(
                     padding: const EdgeInsets.only(top: 20, bottom: 20),
                     width: double.infinity,
                     child: const Text(
-                      "Let\'s get started on today's daily check-in.",
+                      "Let's get started on today's daily check-in.",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 30),
                     ),
@@ -94,7 +85,7 @@ class _CheckInPageState extends State<CheckInPage> {
                 ),
                 AnimatedOpacity(
                   opacity: opacity,
-                  duration: Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
                   child: Container(
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -113,7 +104,7 @@ class _CheckInPageState extends State<CheckInPage> {
                 ),
                 AnimatedOpacity(
                   opacity: opacity,
-                  duration: Duration(seconds: 1),
+                  duration: const Duration(seconds: 1),
                   child: Container(
                     decoration: const BoxDecoration(
                       color: Colors.white,

@@ -3,7 +3,7 @@ import '../../../widgets/task_page_with_URL.dart';
 
 class DietarySMARTGoalsPage extends StatefulWidget {
   final String image;
-  DietarySMARTGoalsPage({required this.image});
+  const DietarySMARTGoalsPage({super.key, required this.image});
 
   @override
   State<DietarySMARTGoalsPage> createState() => _DietarySMARTGoalsState();

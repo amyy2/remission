@@ -3,7 +3,7 @@ import '../../../widgets/task_page_with_URL.dart';
 
 class WorryLogPage extends StatefulWidget {
   final String image;
-  WorryLogPage({required this.image});
+  const WorryLogPage({super.key, required this.image});
 
   @override
   State<WorryLogPage> createState() => _WorryLogState();

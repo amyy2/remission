@@ -3,7 +3,7 @@ import '../../../widgets/task_page_with_URL.dart';
 
 class PrintCFFListPage extends StatefulWidget {
   final String image;
-  PrintCFFListPage({required this.image});
+  const PrintCFFListPage({super.key, required this.image});
 
   @override
   State<PrintCFFListPage> createState() => _PrintCFFListState();

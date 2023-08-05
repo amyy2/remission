@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:remission/pages/login/forgot_password.dart';
-import 'package:remission/pages/login/welcome_screen.dart';
-import 'package:remission/services/firebase_auth_methods.dart';
-import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:remission/pages/login/sign_in.dart';
+import 'package:remission/utilities/showSnackBar.dart';
 
 import '../../colors.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({super.key});
 
   @override
-  _SignInState createState() => _SignInState();
+  _ForgotPasswordState createState() => _ForgotPasswordState();
 }
 
-class _SignInState extends State<SignIn> {
+class _ForgotPasswordState extends State<ForgotPassword> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void signInUser() {
-    context.read<FirebaseAuthMethods>().emailSignIn(
-        email: emailController.text,
-        password: passwordController.text,
-        context: context);
+  void resetPassword() async {
+    try {
+      List? list = await FirebaseAuth.instance
+          .fetchSignInMethodsForEmail(emailController.text.trim());
+      if (list.isNotEmpty) {
+        await FirebaseAuth.instance
+            .sendPasswordResetEmail(email: emailController.text.trim());
+        showSnackBar(context, "Reset password email sent");
+        Navigator.of(context).pop();
+      } else {
+        showSnackBar(context, "Email does not exist");
+      }
+    } catch (e) {
+      showSnackBar(context, "Email does not exist");
+    }
   }
 
   @override
@@ -45,13 +54,12 @@ class _SignInState extends State<SignIn> {
                 Container(
                   margin: const EdgeInsets.only(top: 40, bottom: 30),
                   child: const Text(
-                    'Welcome back',
+                    'Trouble logging in?',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontFamily: 'DancingScript',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 40,
-                        color: MyColors.orange),
+                        fontFamily: 'Poppins',
+                        fontSize: 25,
+                        color: Colors.white),
                   ),
                 ),
                 Padding(
@@ -78,37 +86,13 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: SizedBox(
-                    width: 300,
-                    height: 50,
-                    child: TextFormField(
-                      obscureText: true,
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: const Color.fromARGB(124, 255, 255, 255),
-                        contentPadding: const EdgeInsets.all(10.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        hintText: 'Password',
-                        hintStyle: const TextStyle(
-                            fontFamily: 'Poppins',
-                            color: MyColors.darkBlue,
-                            fontSize: 18),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
                   padding: const EdgeInsets.only(
                       top: 20, left: 20, right: 20, bottom: 40),
                   child: SizedBox(
                     width: 300,
                     height: 50,
                     child: OutlinedButton(
-                      onPressed: signInUser,
+                      onPressed: resetPassword,
                       style: OutlinedButton.styleFrom(
                           backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
@@ -116,7 +100,7 @@ class _SignInState extends State<SignIn> {
                                   width: 0, style: BorderStyle.solid),
                               borderRadius: BorderRadius.circular(50))),
                       child: const Text(
-                        'Sign in',
+                        'Reset password',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -134,42 +118,18 @@ class _SignInState extends State<SignIn> {
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
-                                  const WelcomeScreen(),
+                                  const SignIn(),
                           transitionDuration: Duration.zero,
                           reverseTransitionDuration: Duration.zero,
                         ));
                   },
                   child: const Text(
-                    'Don\'t have an account? Sign up',
+                    'Back to login',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 18,
                         color: Colors.white),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  const ForgotPassword(),
-                          transitionDuration: Duration.zero,
-                          reverseTransitionDuration: Duration.zero,
-                        ));
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.only(top: 20),
-                    child: Text(
-                      'Forgot Password',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                          color: Colors.white),
-                    ),
                   ),
                 ),
               ],
