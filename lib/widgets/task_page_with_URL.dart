@@ -133,18 +133,26 @@ class _TaskState extends State<TaskPageWithURL> {
                   textAlign: TextAlign.left,
                   style: const TextStyle(fontSize: 15)),
             ),
-            GestureDetector(
-              onTap: _launchUrl,
-              child: Container(
-                padding: const EdgeInsets.only(
-                    top: 16, left: 20, right: 20, bottom: 16),
-                width: double.infinity,
+            Container(
+              padding: const EdgeInsets.only(
+                  top: 16, left: 100, right: 100, bottom: 16),
+              width: double.infinity,
+              child: OutlinedButton(
+                onPressed: () {
+                  _launchUrl;
+                },
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 124, 164, 187),
+                    shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                            width: 0, style: BorderStyle.solid),
+                        borderRadius: BorderRadius.circular(50))),
                 child: Text(widget.URLname,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: MyColors.darkBlue)),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white)),
               ),
             ),
             Padding(
