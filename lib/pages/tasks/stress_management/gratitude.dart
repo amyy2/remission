@@ -13,7 +13,7 @@ class _GratitudeState extends State<GratitudePage> {
   @override
   Widget build(BuildContext context) {
     return TaskPageWithURL(
-        URL: 'https://www.ownyourcancercoaching.com/gratitudeexercise',
+        URL: 'https://www.remissionsupport.com/gratitudeexercise',
         title: 'Gratitude',
         description: 'Complete the exercise below.',
         URLname: 'Click here',

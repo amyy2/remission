@@ -13,7 +13,7 @@ class _CopingWithFearsState extends State<CopingWithFearsPage> {
   @override
   Widget build(BuildContext context) {
     return TaskPageWithURL(
-        URL: 'https://www.ownyourcancercoaching.com/copingwithcancerfears',
+        URL: 'https://www.remissionsupport.com/copingwithcancerfears',
         title: 'Coping with fears',
         description: 'Complete the exercise below.',
         URLname: 'Click here',

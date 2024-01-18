@@ -13,7 +13,7 @@ class _BalanceState extends State<BalancePage> {
   @override
   Widget build(BuildContext context) {
     return TaskPageWithURL(
-        URL: 'https://www.ownyourcancercoaching.com/balance-exercise',
+        URL: 'https://www.remissionsupport.com/balance-exercise',
         title: 'Balance',
         description: 'Complete the exercise below.',
         URLname: 'Click here',

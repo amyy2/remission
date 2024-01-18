@@ -13,7 +13,7 @@ class _DietarySMARTGoalsState extends State<DietarySMARTGoalsPage> {
   @override
   Widget build(BuildContext context) {
     return TaskPageWithURL(
-        URL: 'https://www.ownyourcancercoaching.com/Dietarysmartgoals-dietary',
+        URL: 'https://www.remissionsupport.com/Dietarysmartgoals-dietary',
         title: 'SMART goals',
         description: 'Complete the exercise below.',
         URLname: 'Click here',

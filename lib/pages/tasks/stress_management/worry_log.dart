@@ -13,7 +13,7 @@ class _WorryLogState extends State<WorryLogPage> {
   @override
   Widget build(BuildContext context) {
     return TaskPageWithURL(
-        URL: 'https://www.ownyourcancercoaching.com/worrylog',
+        URL: 'https://www.remissionsupport.com/worrylog',
         title: 'Worry log',
         description: 'Complete the exercise below.',
         URLname: 'Click here',

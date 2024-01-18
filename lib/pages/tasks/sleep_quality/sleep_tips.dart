@@ -13,7 +13,7 @@ class _SleepTipsState extends State<SleepTipsPage> {
   @override
   Widget build(BuildContext context) {
     return TaskPageWithURL(
-        URL: 'https://www.ownyourcancercoaching.com/sleeptips',
+        URL: 'https://www.remissionsupport.com/sleeptips',
         title: 'Sleep tips',
         description: 'Complete the exercise below.',
         URLname: 'Click here',

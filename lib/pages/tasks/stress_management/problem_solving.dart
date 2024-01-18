@@ -13,7 +13,7 @@ class _ProblemSolvingState extends State<ProblemSolvingPage> {
   @override
   Widget build(BuildContext context) {
     return TaskPageWithURL(
-        URL: 'https://www.ownyourcancercoaching.com/problemsolving',
+        URL: 'https://www.remissionsupport.com/problemsolving',
         title: 'Problem solving',
         description: 'Complete the exercise below.',
         URLname: 'Click here',

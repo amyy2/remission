@@ -31,14 +31,18 @@ class _TaskState extends State<TaskPageWithURL> {
   late final Uri _url = Uri.parse(widget.URL);
 
   Future<void> _launchUrl() async {
+    print('Starting _launchUrl');
     if (!await launchUrl(_url)) {
+      print('Failed to launch URL');
       throw Exception('Could not launch $_url');
     }
+    print('URL launched successfully');
   }
 
   List completed = [];
 
   Future getCompleted() async {
+    print("got completed");
     await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -139,7 +143,7 @@ class _TaskState extends State<TaskPageWithURL> {
               width: double.infinity,
               child: OutlinedButton(
                 onPressed: () {
-                  _launchUrl;
+                  _launchUrl();
                 },
                 style: OutlinedButton.styleFrom(
                     backgroundColor: Color.fromARGB(255, 124, 164, 187),

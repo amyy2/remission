@@ -14,7 +14,7 @@ class _PhysicalSMARTGoalsState extends State<PhysicalSMARTGoalsPage> {
   Widget build(BuildContext context) {
     return TaskPageWithURL(
         URL:
-            'https://www.ownyourcancercoaching.com/smart-goals-for-physicalmovement',
+            'https://www.remissionsupport.com/smart-goals-for-physicalmovement',
         title: 'SMART goals',
         description:
             'What is your main goal in terms of physical activity? (ie., to get in shape, to be more active, to have more motivation to exercise, etc) Complete the following exercise.',

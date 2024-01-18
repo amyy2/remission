@@ -13,7 +13,7 @@ class _FoodJournalState extends State<FoodJournalPage> {
   @override
   Widget build(BuildContext context) {
     return TaskPageWithURL(
-        URL: 'https://www.ownyourcancercoaching.com/exercise',
+        URL: 'https://www.remissionsupport.com/exercise',
         title: 'Food journal',
         description: 'Complete the exercise below.',
         URLname: 'Click here',
